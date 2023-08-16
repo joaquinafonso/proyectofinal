@@ -231,3 +231,37 @@ a.custom-card:hover {
   width: 40%;
 }
 
+#productsGrid{
+  display: flex;
+  padding: 30px;
+}
+
+.card{
+  position: relative;
+  margin: 10px;
+  height: 400px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.btn:hover{
+  cursor: default;
+}
+
+.card-text{
+  font-size: small;
+}
+
+.card-img-top{
+  border-radius: 10px;
+}
+
+/* wrapper de productos */
+.flex-container{
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.btn-price{
+  border-radius: 10px;
+}
