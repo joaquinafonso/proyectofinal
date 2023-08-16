@@ -14,24 +14,25 @@
       background-color: #ffdbc3;
     }
   </style>
-  <script src="./js/login.js"></script>
 </head>
 
 
 
 <body>
   <main class="mt-5">
-
+    <div class="alert alert-danger text-center" role="alert" id="faltan_datos">
+      <h4 class="alert-heading">Faltan Datos</h4>
+    </div>
     <div id="datos" class="loginContainer">
       <form>
       <h2>Login to your account</h2>
-      <input class="infobox" type="text" name="emailAddress" placeholder="Email Address"> 
+      <input class="infobox" type="text" name="emailAddress" placeholder="Email Address" id="email"> 
       <br>
-      <input class="infobox" type="password" name="password" placeholder="Password">
+      <input class="infobox" type="password" name="password" placeholder="Password" id="password">
       <div class="checkbox">
       <label>
       <input type="checkbox" id="rememberMe"> Remember me?</label><br>
-      <button class="loginbutton" onclick="volverAlInicio()">Login</button>
+      <button class="loginbutton" id="loginbutton">Login</button>
       </div>
       <p><a href="#">Forgot your password?</a></p>
     </div>
@@ -52,7 +53,7 @@
       <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
     </div>
   </footer>
-  <script src="js/login.js"></script>
+  <script src='./js/login.js' defer></script>
 </body>
 
 </html>
