@@ -15,5 +15,4 @@ function toInicio (event){
     }
 }
 
-
 button.addEventListener("click", toInicio)
