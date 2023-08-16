@@ -212,3 +212,15 @@ a.custom-card:hover {
 .loginContainer, h2 {
   text-align: center;
 }
+
+.loginbutton {
+  background-color: #0087F7;
+  color: white;
+  width: 50%;
+  height: 15%;
+}
+
+.loginbutton:hover {
+  background-color: #085899;
+  font-weight: 700;
+}
