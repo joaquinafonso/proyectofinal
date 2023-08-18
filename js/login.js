@@ -3,7 +3,7 @@ let password = document.getElementById("password")
 let email = document.getElementById("email")
 let aviso = document.getElementById("faltan_datos")
 let contrasena_incorrecta = document.getElementById("contrasena_incorrecta")
-console.log(button)
+console.log(localStorage)
 
 contrasena_incorrecta.style.display = 'none'
 aviso.style.display = 'none'

@@ -9,6 +9,7 @@ console.log(button)
 
 faltan_datos.style.display = 'none'
 usuario_invalido.style.display = 'none'
+contrasena_incorrecta.style.display = 'none'
 
 function toInicio (event){
     event.preventDefault()
