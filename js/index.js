@@ -8,6 +8,14 @@ document.addEventListener("DOMContentLoaded", function(){
         window.location = "login.html"
     }
 
+    const endSessionBtn = document.getElementById('endSession');
+    endSessionBtn.addEventListener('click', function () {
+        localStorage.setItem('userLoggedIn', 'false');
+        localStorage.removeItem('username');
+        alert('Has cerrado sesión')
+        location.reload()
+    })
+
     document.getElementById("autos").addEventListener("click", function() {
         localStorage.setItem("catID", 101);
         window.location = "products.html"
