@@ -229,6 +229,11 @@ a.custom-card:hover {
   height: 15%;
 }
 
+#endSession:hover {
+  background-color: #5C4B99;
+  font-weight: 700;
+}
+
 .loginbutton:hover {
   background-color: #5C4B99;
   font-weight: 700;
