@@ -40,5 +40,6 @@ function checkearSesion(){
     if (localStorage.getItem('userLoggedIn') === 'true'){
         const checkUsername = localStorage.getItem('username');
         console.log(`Usuario ${checkUsername} ha iniciado sesión.`);
+        alert(`Bienvenido ${checkUsername}`)
     }
 }
