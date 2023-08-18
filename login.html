@@ -37,7 +37,7 @@
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.html">Login</a>
+            <a class="nav-link" href="sign-up.html">Sign Up</a>
           </li>
         </ul>
       </div>
@@ -45,9 +45,14 @@
   </nav>
 
   <main class="mt-5">
-    <div class="alert alert-danger text-center" role="alert" id="faltan_datos">
-      <h4 class="alert-heading">Faltan Datos</h4>
-    </div>
+    <section id="alertas">
+      <div class="alert alert-danger text-center" role="alert" id="faltan_datos">
+        <h4 class="alert-heading">Faltan Datos</h4>
+      </div>
+      <div class="alert alert-danger text-center" role="alert" id="contrasena_incorrecta">
+        <h4 class="alert-heading">Contraseña Incorrecta</h4>
+      </div>
+    </section>
     <div id="datos" class="loginContainer">
       <form>
       <h2>Login to your account</h2>
@@ -56,18 +61,13 @@
       <input class="infobox" type="password" name="password" placeholder="Password" id="password">
       <div class="checkbox">
       <label>
-      <input type="checkbox" id="rememberMe"> Remember me?</label><br>
+      <!-- <input type="checkbox" id="rememberMe"> Remember me?</label> -->
+      <br>
       <button class="loginbutton" id="loginbutton">Login</button>
       </div>
-      <p><a href="#">Forgot your password?</a></p>
+      <p><a href="#" onclick="()=>{alert('Yo también :p')}">Forgot your password?</a></p>
     </div>
     </form>
-  
-    <!-- <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div> -->
-      
     </div>
   </main>
   <footer class="text-muted">
