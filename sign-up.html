@@ -14,6 +14,7 @@
       background-color: #ffdbc3;
     }
   </style>
+  <script src="./js/sign-up.js" defer></script>
 </head>
 
 
@@ -46,15 +47,15 @@
 
   <main class="mt-5">
     <section id="alertas">
-      <div class="alert alert-danger text-center" role="alert" id="faltan_datos">
-        <h4 class="alert-heading">Faltan Datos</h4>
-      </div>
-      <div class="alert alert-danger text-center" role="alert" id="usuario_registrado">
-        <h4 class="alert-heading">Usuario ya registrado</h4>
-      </div>
-      <div class="alert alert-danger text-center" role="alert" id="contrasena_incorrecta">
-        <h4 class="alert-heading">La contraseña debe ser la misma en ambos campos</h4>
-      </div>
+        <div class="alert alert-danger text-center" role="alert" id="contrasena_incorrecta" style="display: none;">
+            <h4 class="alert-heading">La contraseña debe ser la misma en ambos campos</h4>
+        </div>
+        <div class="alert alert-danger text-center" role="alert" id="faltan_datos" style="display: none;">
+            <h4 class="alert-heading">Faltan Datos</h4>
+        </div>
+        <div class="alert alert-danger text-center" role="alert" id="usuario-registrado" style="display: none;">
+            <h4 class="alert-heading">Usuario ya registrado</h4>
+        </div>
     </section>
     <div id="datos" class="loginContainer">
       <form>
@@ -63,10 +64,10 @@
       <br>
       <input class="infobox" type="password" name="password" placeholder="Password" id="password">
       <br>
-      <input class="infobox" type="confirm-password" name="password" placeholder="Password" id="confirm-password">
+      <input class="infobox" type="password" name="password" placeholder="Password" id="confirm-password">
       <div class="checkbox">
       <label>
-      <button class="sign-up-button" id="sign-up-button">Sign Up</button>
+      <button class="sign-up-button" id="signUpButton">Sign Up</button>
       </div>
     </div>
     </form>
@@ -81,7 +82,7 @@
       <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
     </div>
   </footer>
-  <script src='./js/sign-up.js' defer></script>
+  
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
 </body>

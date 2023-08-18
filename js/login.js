@@ -7,12 +7,12 @@ console.log(localStorage)
 
 contrasena_incorrecta.style.display = 'none'
 aviso.style.display = 'none'
+localStorage.setItem("userLoggedIn", false)
 
 function toInicio (event){
     event.preventDefault()
     if (email.value != '' && password.value != ''){
         validarUser()
-        //location.href ='index.html'
     }else{
         aviso.style.display = 'block'
         setTimeout(()=>{aviso.style.display = 'none'}, 5000)
@@ -25,7 +25,8 @@ function validarUser(){
     if(localStorage.hasOwnProperty(email.value)){ // Si está registrado
         if( localStorage.getItem(email.value) == password.value){ // Si la contraseña coincide
             localStorage.setItem('userLoggedIn', true);
-            location.href = 'index.html' // Se establece que hay una sesión abierta y redirexiona al índice
+            localStorage.setItem('actualUser', email.value)
+            location.href = 'index.html' // Se establece que hay una sesión abierta, cual es el usuario y redirexiona al índice
         }else{
             contrasena_incorrecta.style.display = 'block'
             setTimeout(()=>{contrasena_incorrecta.style.display = 'none'}, 5000)
@@ -40,31 +41,3 @@ function validarUser(){
         }
     }
 }
-
-/*function validarUser(){
-    if (email.value == "admin"){
-        if (password.value == "admin"){
-            localStorage.setItem('userLoggedIn', 'true');
-            localStorage.setItem('username', email.value);
-            console.log('Datos guardados')
-            checkearSesion();
-            location.href = 'index.html'
-        }
-        else{
-            console.log('Error de contrasena')
-        }
-    }
-    else{
-        console.log('Error de usuario')
-    }
-}
-
-
-function checkearSesion(){
-    if (localStorage.getItem('userLoggedIn') === 'true'){
-        const checkUsername = localStorage.getItem('username');
-        console.log(`Usuario ${checkUsername} ha iniciado sesión.`);
-        alert(`Bienvenido ${checkUsername}`)
-    }
-}
-*/
