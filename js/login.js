@@ -1,35 +1,38 @@
 let button = document.getElementById("loginbutton")
 let password = document.getElementById("password")
 let email = document.getElementById("email")
-let aviso = document.getElementById("faltan_datos")
-let contrasena_incorrecta = document.getElementById("contrasena_incorrecta")
-console.log(localStorage)
+let missing_values = document.getElementById("faltan_datos")
+let wrong_password = document.getElementById("contrasena_incorrecta")
 
-contrasena_incorrecta.style.display = 'none'
-aviso.style.display = 'none'
-localStorage.setItem("userLoggedIn", false)
+wrong_password.style.display = 'none'
+missing_values.style.display = 'none'
 
-function toInicio (event){
+register.isConected = false;
+localStorage.setItem("register", JSON.stringify(register))
+
+
+function toMain (event){
     event.preventDefault()
     if (email.value != '' && password.value != ''){
-        validarUser()
+        validateUser()
     }else{
-        aviso.style.display = 'block'
-        setTimeout(()=>{aviso.style.display = 'none'}, 5000)
+        missing_values.style.display = 'block'
+        setTimeout(()=>{missing_values.style.display = 'none'}, 5000)
     }
 }
 
-button.addEventListener("click", toInicio)
+button.addEventListener("click", toMain)
 
-function validarUser(){
-    if(localStorage.hasOwnProperty(email.value)){ // Si está registrado
-        if( localStorage.getItem(email.value) == password.value){ // Si la contraseña coincide
-            localStorage.setItem('userLoggedIn', true);
-            localStorage.setItem('actualUser', email.value)
+function validateUser(){
+    if(register.users.hasOwnProperty(email.value)){ // Si está registrado
+        if( register.users[email.value] == password.value){ // Si la contraseña coincide
+            register.isConected = true
+            register.actualUser = email.value
+            localStorage.setItem('register', JSON.stringify(register))
             location.href = 'index.html' // Se establece que hay una sesión abierta, cual es el usuario y redirexiona al índice
         }else{
-            contrasena_incorrecta.style.display = 'block'
-            setTimeout(()=>{contrasena_incorrecta.style.display = 'none'}, 5000)
+            wrong_password.style.display = 'block'
+            setTimeout(()=>{wrong_password.style.display = 'none'}, 5000)
         }
     }else{ // En caso de que no se haya registrado el email antes
         let nuevaCuenta = confirm("El email ingresado no ha sido registrado. Deseas crear una cuenta?") // Pregunta si quiere crear cuenta
