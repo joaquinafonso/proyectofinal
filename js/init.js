@@ -17,13 +17,31 @@ if(localStorage.getItem('register') === null || localStorage.getItem('register')
   localStorage.setItem('register', JSON.stringify(registerEstructure))
 }
 
+//let register = JSON.parse(localStorage.getItem('register'))
+//let actualUser = document.getElementsByClassName("username")
+//console.log((!/login\.html/.test(window.location.pathname) && !/sign\-up\.html$/.test(window.location.pathname)), window.location.pathname)
+//if(!/login\.html/.test(window.location.pathname) && !/sign\-up\.html$/.test(window.location.pathname)){
+//  if (!register.isConected){
+//    alert('Detectamos que no has iniciado sesión en este dispositivo. \n Da clic en aceptar para iniciar sesión. ')
+//    window.location = "login.html"
+//  } else {
+//    Array.prototype.forEach.call(
+//      actualUser,
+//      function (element) {
+//      if (element.nodeName == "A"){
+//          element.innerHTML = register.actualUser
+//        }
+//      }
+//    )
+//  }
+//}
+
 let register = JSON.parse(localStorage.getItem('register'))
 let actualUser = document.getElementsByClassName("username")
-console.log((!/login\.html/.test(window.location.pathname) && !/sign\-up\.html$/.test(window.location.pathname)), window.location.pathname)
-if(!/login\.html/.test(window.location.pathname) && !/sign\-up\.html$/.test(window.location.pathname)){
-  if (!register.isConected){
+if(window.location.pathname != '/login.html' && window.location.pathname != '/sign-up.html'){
+  if (!register || !register.isConected){
     alert('Detectamos que no has iniciado sesión en este dispositivo. \n Da clic en aceptar para iniciar sesión. ')
-    window.location = "login.html"
+    window.location.href = "login.html"
   } else {
     Array.prototype.forEach.call(
       actualUser,
