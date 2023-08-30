@@ -1,5 +1,6 @@
+let categoryProduct = localStorage.getItem('catID')
 const container = document.getElementById('productsGrid');
-const API_URL = 'https://japceibal.github.io/emercado-api/cats_products/101.json'
+const API_URL = `https://japceibal.github.io/emercado-api/cats_products/${categoryProduct}.json`
 
 
 fetch(API_URL)
