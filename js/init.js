@@ -19,10 +19,11 @@ if(localStorage.getItem('register') === null || localStorage.getItem('register')
 
 let register = JSON.parse(localStorage.getItem('register'))
 let actualUser = document.getElementsByClassName("username")
+console.log((!/login\.html/.test(window.location.pathname) && !/sign\-up\.html$/.test(window.location.pathname)), window.location.pathname)
 if(!/login\.html/.test(window.location.pathname) && !/sign\-up\.html$/.test(window.location.pathname)){
   if (!register.isConected){
     alert('Detectamos que no has iniciado sesión en este dispositivo. \n Da clic en aceptar para iniciar sesión. ')
-    //window.location = "login.html"
+    window.location = "login.html"
   } else {
     Array.prototype.forEach.call(
       actualUser,
