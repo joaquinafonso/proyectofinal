@@ -7,6 +7,7 @@ const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
 
+document.addEventListener("DOMContentLoaded", function() {
 let registerEstructure = {
   isConected:false, 
   actualUser: '-',
@@ -35,6 +36,7 @@ if(localStorage.getItem('register') === null || localStorage.getItem('register')
 //    )
 //  }
 //}
+
 
 let register = JSON.parse(localStorage.getItem('register'))
 let actualUser = document.getElementsByClassName("username")
@@ -86,3 +88,5 @@ let getJSONData = function(url){
         return result;
     });
 }
+
+});
