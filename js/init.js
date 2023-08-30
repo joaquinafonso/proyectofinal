@@ -22,7 +22,7 @@ let actualUser = document.getElementsByClassName("username")
 if(window.location.pathname != '/login.html' && window.location.pathname != '/sign-up.html'){
   if (!register.isConected){
     alert('Detectamos que no has iniciado sesión en este dispositivo. \n Da clic en aceptar para iniciar sesión. ')
-    window.location = "login.html"
+    window.location.href = "login.html"
   } else {
     Array.prototype.forEach.call(
       actualUser,
