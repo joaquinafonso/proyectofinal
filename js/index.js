@@ -1,3 +1,4 @@
+let register = JSON.parse(localStorage.getItem('register'))
 document.addEventListener("DOMContentLoaded", function(){
 
     const endSessionBtn = document.getElementById('endSession');

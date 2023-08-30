@@ -3,7 +3,6 @@ let password = document.getElementById("password")
 let email = document.getElementById("email")
 let missing_values = document.getElementById("faltan_datos")
 let wrong_password = document.getElementById("contrasena_incorrecta")
-
 wrong_password.style.display = 'none'
 missing_values.style.display = 'none'
 

@@ -6,15 +6,16 @@ const PRODUCT_INFO_COMMENTS_URL = "https://japceibal.github.io/emercado-api/prod
 const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
+let register = JSON.parse(localStorage.getItem('register'));
 
-document.addEventListener("DOMContentLoaded", function() {
+
 let registerEstructure = {
   isConected:false, 
   actualUser: '-',
   users: {'admin': 'admin'}
 }
 
-if(localStorage.getItem('register') === null || localStorage.getItem('register').isConected === null){
+if(localStorage.getItem('register') === null || register.isConected === undefined){
   localStorage.setItem('register', JSON.stringify(registerEstructure))
 }
 
@@ -37,8 +38,6 @@ if(localStorage.getItem('register') === null || localStorage.getItem('register')
 //  }
 //}
 
-
-let register = JSON.parse(localStorage.getItem('register'))
 let actualUser = document.getElementsByClassName("username")
 if(window.location.pathname != '/login.html' && window.location.pathname != '/sign-up.html'){
   if (!register || !register.isConected){
@@ -88,5 +87,3 @@ let getJSONData = function(url){
         return result;
     });
 }
-
-});
