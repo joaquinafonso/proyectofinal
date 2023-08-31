@@ -39,8 +39,9 @@ if(localStorage.getItem('register') === null || register.isConected === undefine
 //}
 
 let actualUser = document.getElementsByClassName("username")
-if(window.location.pathname != '/login.html' && window.location.pathname != '/sign-up.html'){
-  if (!register || !register.isConected){
+//if(window.location.pathname != 'login.html' && window.location.pathname != 'sign-up.html'){
+if(!/login\.html$/.test(window.location.pathname) && !/sign-up\.html$/.test(window.location.pathname)){
+  if (!register.isConected){
     alert('Detectamos que no has iniciado sesión en este dispositivo. \n Da clic en aceptar para iniciar sesión. ')
     window.location.href = "login.html"
   } else {
