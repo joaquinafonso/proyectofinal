@@ -1,102 +1,86 @@
-let categoryProduct = localStorage.getItem('catID');
+let categoryProduct = localStorage.getItem('catID')
 const container = document.getElementById('productsGrid');
-const API_URL = `https://japceibal.github.io/emercado-api/cats_products/${categoryProduct}.json`;
-
-let productList = []; 
+const API_URL = `https://japceibal.github.io/emercado-api/cats_products/${categoryProduct}.json`
+const searcher = document.getElementById("searcher")
+const filterForm = document.getElementById('rangeFilterCount');
+let productList;
 
 fetch(API_URL)
-    .then(response => response.json())
-    .then(data => {
+.then(response => response.json())
+.then(data => {
         productList = data.products;
-        for (let i=0; i<productList.length; i++) {
+        placeItems(productList)
+    })
+    .catch(error => console.error('Error:', error));
+
+    
+    
+function placeItems(products, filter = /./){ // Si solo se le pasa la lista pone todos los elementos, si además se le pasa una condición (expresión regular) filtra los elementos teniendo en cuenta la condicion
+    container.innerHTML = ""
+    for (let i = 0; i < products.length; i++) {        
+        if(filter.test(products[i].name)){
+            filter.lastIndex = 0
             const paragraph = document.createElement("p");
-            paragraph.innerText = productList[i].name;
+            paragraph.innerText = products[i].name;
             let div = document.createElement('div')
             div.classList = ('col-md-3')
 
-            div.innerHTML = `<div class='card' style='width: auto;'><img src='${productList[i].image}' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>${productList[i].name}</h5><p class='card-text'>${productList[i].description}</p><span class='btn btn-primary btn-price'>${productList[i].currency} ${productList[i].cost}</span></div></div>`
+            div.innerHTML = `<div class='card' style='width: auto;'><img src='${products[i].image}' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>${products[i].name}</h5><p class='card-text'>${products[i].description}</p><span class='btn btn-primary btn-price'>${products[i].currency} ${products[i].cost}</span></div></div>`
 
             container.appendChild(div)
-        }    
-    })    
-    .catch(error => console.error('Error:', error));
-
-    function displayProducts(products) {
-    container.innerHTML = '';
-
-    for (let i = 0; i < products.length; i++) {
+        }
     }
 }
 
-{/* function applyFilters(minPrice, maxPrice, sortBy) {
-    let filteredProducts = [...productList];
+searcher.addEventListener('input', filterProducts)
 
-    if (minPrice !== undefined && maxPrice !== undefined) {
-        filteredProducts = filteredProducts.filter(product =>
-            product.cost >= minPrice && product.cost <= maxPrice
-        );
+function filterProducts (){
+    let reg
+    if(searcher.value != ''){
+        let value = searcher.value.replace(/[\\[.+*?(){|^$]/g, "\\$&") // Limpia el string de caracteres especiales para que la búsqueda no falle
+        reg = new RegExp(value, 'gi')
+    }else{
+        reg = new RegExp('.') // En caso de estar vacío se asegura de que coincida con todos los resultados
     }
-
-    if (sortBy === 'priceAsc') {
-        filteredProducts.sort((a, b) => a.cost - b.cost);
-    } else if (sortBy === 'priceDesc') {
-        filteredProducts.sort((a, b) => b.cost - a.cost);
-    } else if (sortBy === 'relevanceDesc') {
-        filteredProducts.sort((a, b) => b.sold - a.sold);
-    }
-
-    displayProducts(filteredProducts);
+    let items = getValues()
+    
+    placeItems(items, reg)
 }
 
-function saveFilters(minPrice, maxPrice, sortBy) {
-    const filters = { minPrice, maxPrice, sortBy };
-    localStorage.setItem('productFilters', JSON.stringify(filters));
-}  */}
+filterForm.addEventListener('click', ()=>{
+    let items = getValues()
+    placeItems(items)
 
-
-
-const filterForm = document.getElementById('filterForm');
-
-filterForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const minPrice = parseFloat(document.getElementById('minPrice').value);
-    const maxPrice = parseFloat(document.getElementById('maxPrice').value);
-    const sortBy = document.getElementById('sortBy').value;
-
-    applyFilters(minPrice, maxPrice, sortBy);
-    saveFilters(minPrice, maxPrice, sortBy);
 });
 
-document.getElementById("clearRangeFilter").addEventListener("click", function(){
-    document.getElementById("rangeFilterCountMin").value = "";
-    document.getElementById("rangeFilterCountMax").value = "";
+function getValues() {
+    
+    let minPrice = parseFloat(document.getElementById('rangeFilterCountMin').value);
+    let maxPrice = parseFloat(document.getElementById('rangeFilterCountMax').value);
 
-    minCount = undefined;
-    maxCount = undefined;
-
-    showCategoriesList();
-});
-
-document.getElementById("rangeFilterCount").addEventListener("click", function(){
-    //Obtengo el mínimo y máximo de los intervalos para filtrar por cantidad
-    //de productos por categoría.
-    minCount = document.getElementById("rangeFilterCountMin").value;
-    maxCount = document.getElementById("rangeFilterCountMax").value;
-
-    if ((minCount != undefined) && (minCount != "") && (parseInt(minCount)) >= 0){
-        minCount = parseInt(minCount);
+    if(isNaN(minPrice)){
+        minPrice = 0
     }
-    else{
-        minCount = undefined;
+    if(isNaN(maxPrice)){
+        maxPrice = productList.sort((a, b) => b.cost - a.cost)[0].cost
+        productList.sort((a, b) => a.id - b.id)
     }
+    
+    // const sortBy = document.getElementById('sortBy').value;
+    let filterProducts = productList.filter((el)=> el.cost <= maxPrice && el.cost >= minPrice)
+    return filterProducts
+}
 
-    if ((maxCount != undefined) && (maxCount != "") && (parseInt(maxCount)) >= 0){
-        maxCount = parseInt(maxCount);
-    }
-    else{
-        maxCount = undefined;
-    }
 
-    showCategoriesList();
-});
+
+const clearRange = document.getElementById('clearRangeFilter')
+clearRange.addEventListener('input', function () {console.log('a')})
+
+console.log(clearRange)
+
+function clearInputs(event){
+    //document.getElementById('rangeFilterCountMin').value = 0
+    //document.getElementById('rangeFilterCountMax').value = 0
+    console.log('a', event)
+    //placeItems(productList)
+}
