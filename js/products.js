@@ -4,6 +4,10 @@ const API_URL = `https://japceibal.github.io/emercado-api/cats_products/${catego
 const searcher = document.getElementById("searcher")
 const filterForm = document.getElementById('rangeFilterCount');
 let productList;
+const sortAscBtn = document.getElementById('ordenAscendente')
+const sortDescBtn = document.getElementById('ordenDesendente')
+const sortByCount = document.getElementById('ordenRelevancia')
+
 
 fetch(API_URL)
 .then(response => response.json())
@@ -33,6 +37,28 @@ function placeItems(products, filter = /./){ // Si solo se le pasa la lista pone
 }
 
 searcher.addEventListener('input', filterProducts)
+
+sortAscBtn.addEventListener('click', sortAsc)
+sortDescBtn.addEventListener('click', sortDesc)
+sortByCount.addEventListener('click', sortRel)
+
+// ordena precio ascendente
+function sortAsc(){
+    productList.sort((a, b) => a.cost - b.cost);
+    placeItems(productList)
+}
+
+//ordena precio descendente
+function sortDesc(){
+    productList.sort((a, b) => b.cost - a.cost);
+    placeItems(productList)
+}
+
+// ordena por relevancia
+function sortRel(){
+    productList.sort((a, b) => b.soldCount - a.soldCount);
+    placeItems(productList)
+}
 
 function filterProducts (){
     let reg
