@@ -276,3 +276,15 @@ a.custom-card:hover {
 .btn-price{
   border-radius: 10px;
 }
+
+.btn-order-group{
+  display: flex;
+  flex-direction: row;
+  width: 20%;
+  margin-right: 40%;
+}
+.orderButton {
+ float: inline-end;
+ width: 50px;
+ height: 50px;
+}
