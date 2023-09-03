@@ -45,20 +45,23 @@ sortByCount.addEventListener('click', sortRel)
 
 // ordena precio ascendente
 function sortAsc(){
-    productList.sort((a, b) => a.cost - b.cost);
-    placeItems(productList)
+    let items = getValues()
+    items.sort((a, b) => a.cost - b.cost);
+    placeItems(items)
 }
 
 //ordena precio descendente
 function sortDesc(){
-    productList.sort((a, b) => b.cost - a.cost);
-    placeItems(productList)
+    let items = getValues()
+    items.sort((a, b) => b.cost - a.cost);
+    placeItems(items)
 }
 
 // ordena por relevancia
 function sortRel(){
-    productList.sort((a, b) => b.soldCount - a.soldCount);
-    placeItems(productList)
+    let items = getValues()
+    items.sort((a, b) => b.soldCount - a.soldCount);
+    placeItems(items)
 }
 
 function filterProducts (){
