@@ -104,9 +104,9 @@ clearRange.addEventListener('click', clearInputs)
 
 
 
-function clearInputs(event){
-    document.getElementById('rangeFilterCountMin').value = 0
-    document.getElementById('rangeFilterCountMax').value = 0
+function clearInputs(){
+    document.getElementById('rangeFilterCountMin').value = null
+    document.getElementById('rangeFilterCountMax').value = null
     searcher.value= null;
     placeItems(productList)
 }
