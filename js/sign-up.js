@@ -54,7 +54,7 @@ function registerUser (event){
 }
 
 
-function validateUser(){ // Se guardan los valores establecidos, establece que hay una sesión abierta, guarda cual es la sesión abierta y redirexiona al índice 
+function validateUser(){ // Se guardan los valores establecidos, establece que hay una sesión abierta, guarda cual es la sesión abierta y redirecciona al índice 
     register.isConected = true
     register.actualUser = email.value
     register.users[email.value] = password.value

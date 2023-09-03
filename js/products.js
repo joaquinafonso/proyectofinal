@@ -1,141 +1,114 @@
-let categoryProduct = localStorage.getItem('catID');
+let categoryProduct = localStorage.getItem('catID') //trae variable categoryProduct
 const container = document.getElementById('productsGrid');
-const API_URL = `https://japceibal.github.io/emercado-api/cats_products/${categoryProduct}.json`;
+const API_URL = `https://japceibal.github.io/emercado-api/cats_products/${categoryProduct}.json`//concatena la variable para que acceda al JSON con el número de categoría
+const searcher = document.getElementById("searcher")
+const filterForm = document.getElementById('rangeFilterCount');
+let productList;
+const sortAscBtn = document.getElementById('ordenAscendente')
+const sortDescBtn = document.getElementById('ordenDesendente')
+const sortByCount = document.getElementById('ordenRelevancia')
+
 
 let productList = []; 
 
 fetch(API_URL)
-    .then(response => response.json())
-    .then(data => {
+.then(response => response.json())
+.then(data => {
         productList = data.products;
-        for (let i=0; i<productList.length; i++) {
+        placeItems(productList)
+    })
+    .catch(error => console.error('Error:', error));
+
+    
+    
+function placeItems(products, filter = /./){ // Si solo se le pasa la lista pone todos los elementos, si además se le pasa una condición (expresión regular) filtra los elementos teniendo en cuenta la condicion
+    container.innerHTML = ""
+    for (let i = 0; i < products.length; i++) {        
+        if(filter.test(products[i].name) || filter.test(products[i].description)){
+            filter.lastIndex = 0
             const paragraph = document.createElement("p");
-            paragraph.innerText = productList[i].name;
+            paragraph.innerText = products[i].name;
             let div = document.createElement('div')
             div.classList = ('col-md-3')
 
-            div.innerHTML = `<div class='card' style='width: auto;'><img src='${productList[i].image}' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>${productList[i].name}</h5><p class='card-text'>${productList[i].description}</p><span class='btn btn-primary btn-price'>${productList[i].currency} ${productList[i].cost}</span></div></div>`
+            div.innerHTML = `<div class='card' style='width: auto;'><img src='${products[i].image}' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>${products[i].name}</h5><p class='card-text'>${products[i].description}</p><span class='btn btn-primary btn-price'>${products[i].currency} ${products[i].cost}</span></div></div>`
 
             container.appendChild(div)
-        }    
-    })    
-    .catch(error => console.error('Error:', error));
-
-    function displayProducts(products) {
-    container.innerHTML = '';
-
-    for (let i = 0; i < products.length; i++) {
+        }
     }
 }
 
-displayProducts(products);
+searcher.addEventListener('input', filterProducts)
 
-// Obtener elementos del DOM
-const searchInput = document.getElementById("searchInput");
-const productsList = document.getElementById("productsList");
+sortAscBtn.addEventListener('click', sortAsc)
+sortDescBtn.addEventListener('click', sortDesc)
+sortByCount.addEventListener('click', sortRel)
 
-// Función para mostrar los productos
-function displayProducts(products) {
-    productsList.innerHTML = '';
-
-    for (let i = 0; i < products.length; i++) {
-        const product = products[i];
-        const productElement = document.createElement("div");
-        productElement.textContent = `Nombre: ${product.name}, Título: ${product.title}, Descripción: ${product.description}`;
-        productsList.appendChild(productElement);
-    }
+// ordena precio ascendente
+function sortAsc(){
+    productList.sort((a, b) => a.cost - b.cost);
+    placeItems(productList)
 }
 
-// Función para filtrar productos en tiempo real
-function filterProducts(searchText) {
-    const filteredProducts = productList.filter(product => {
-        const productText = `${product.name} ${product.title} ${product.description}`.toLowerCase();
-        return productText.includes(searchText.toLowerCase());
-    });
-
-    displayProducts(filteredProducts);
+//ordena precio descendente
+function sortDesc(){
+    productList.sort((a, b) => b.cost - a.cost);
+    placeItems(productList)
 }
 
-// Evento de entrada en el campo de búsqueda
-searchInput.addEventListener("input", function () {
-    const searchText = searchInput.value.trim();
-    filterProducts(searchText);
-});
-
-// Mostrar todos los productos al principio
-displayProducts(productList);
-
-
-{/* function applyFilters(minPrice, maxPrice, sortBy) {
-    let filteredProducts = [...productList];
-
-    if (minPrice !== undefined && maxPrice !== undefined) {
-        filteredProducts = filteredProducts.filter(product =>
-            product.cost >= minPrice && product.cost <= maxPrice
-        );
-    }
-
-    if (sortBy === 'priceAsc') {
-        filteredProducts.sort((a, b) => a.cost - b.cost);
-    } else if (sortBy === 'priceDesc') {
-        filteredProducts.sort((a, b) => b.cost - a.cost);
-    } else if (sortBy === 'relevanceDesc') {
-        filteredProducts.sort((a, b) => b.sold - a.sold);
-    }
-
-    displayProducts(filteredProducts);
+// ordena por relevancia
+function sortRel(){
+    productList.sort((a, b) => b.soldCount - a.soldCount);
+    placeItems(productList)
 }
 
-function saveFilters(minPrice, maxPrice, sortBy) {
-    const filters = { minPrice, maxPrice, sortBy };
-    localStorage.setItem('productFilters', JSON.stringify(filters));
-}  */}
+function filterProducts (){
+    let reg
+    if(searcher.value != ''){
+        let value = searcher.value.replace(/[\\[.+*?(){|^$]/g, "\\$&") // Limpia el string de caracteres especiales para que la búsqueda no falle
+        reg = new RegExp(value, 'gi')
+    }else{
+        reg = new RegExp('.') // En caso de estar vacío se asegura de que coincida con todos los resultados
+    }
+    let items = getValues()
+    
+    placeItems(items, reg)
+}
 
+filterForm.addEventListener('click', ()=>{
+    let items = getValues()
+    placeItems(items)
 
-
-const filterForm = document.getElementById('filterForm');
-
-filterForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const minPrice = parseFloat(document.getElementById('minPrice').value);
-    const maxPrice = parseFloat(document.getElementById('maxPrice').value);
-    const sortBy = document.getElementById('sortBy').value;
-
-    applyFilters(minPrice, maxPrice, sortBy);
-    saveFilters(minPrice, maxPrice, sortBy);
 });
 
-document.getElementById("clearRangeFilter").addEventListener("click", function(){
-    document.getElementById("rangeFilterCountMin").value = "";
-    document.getElementById("rangeFilterCountMax").value = "";
+function getValues() {
+    
+    let minPrice = parseFloat(document.getElementById('rangeFilterCountMin').value);
+    let maxPrice = parseFloat(document.getElementById('rangeFilterCountMax').value);
 
-    minCount = undefined;
-    maxCount = undefined;
-
-    showCategoriesList();
-});
-
-document.getElementById("rangeFilterCount").addEventListener("click", function(){
-    //Obtengo el mínimo y máximo de los intervalos para filtrar por cantidad
-    //de productos por categoría.
-    minCount = document.getElementById("rangeFilterCountMin").value;
-    maxCount = document.getElementById("rangeFilterCountMax").value;
-
-    if ((minCount != undefined) && (minCount != "") && (parseInt(minCount)) >= 0){
-        minCount = parseInt(minCount);
+    if(isNaN(minPrice)){
+        minPrice = 0
     }
-    else{
-        minCount = undefined;
+    if(isNaN(maxPrice)){
+        maxPrice = productList.sort((a, b) => b.cost - a.cost)[0].cost
+        productList.sort((a, b) => a.id - b.id)
     }
+    
+    // const sortBy = document.getElementById('sortBy').value;
+    let filterProducts = productList.filter((el)=> el.cost <= maxPrice && el.cost >= minPrice)
+    return filterProducts
+}
 
-    if ((maxCount != undefined) && (maxCount != "") && (parseInt(maxCount)) >= 0){
-        maxCount = parseInt(maxCount);
-    }
-    else{
-        maxCount = undefined;
-    }
 
-    showCategoriesList();
-});
 
+const clearRange = document.getElementById('clearRangeFilter')
+clearRange.addEventListener('click', clearInputs)
+
+
+
+function clearInputs(event){
+    document.getElementById('rangeFilterCountMin').value = 0
+    document.getElementById('rangeFilterCountMax').value = 0
+    searcher.value= null;
+    placeItems(productList)
+}

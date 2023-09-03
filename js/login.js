@@ -28,14 +28,14 @@ function validateUser(){
             register.isConected = true
             register.actualUser = email.value
             localStorage.setItem('register', JSON.stringify(register))
-            location.href = 'index.html' // Se establece que hay una sesión abierta, cual es el usuario y redirexiona al índice
+            location.href = 'index.html' // Se establece que hay una sesión abierta, cual es el usuario y redirecciona al índice
         }else{
             wrong_password.style.display = 'block'
             setTimeout(()=>{wrong_password.style.display = 'none'}, 5000)
         }
     }else{ // En caso de que no se haya registrado el email antes
         let nuevaCuenta = confirm("El email ingresado no ha sido registrado. Deseas crear una cuenta?") // Pregunta si quiere crear cuenta
-        if(nuevaCuenta){ // Si quiere crear una cuenta lo redirije a la página correspondiente
+        if(nuevaCuenta){ // Si quiere crear una cuenta lo redirige a la página correspondiente
             location.href = 'sign-up.html'
         }else{ // Si no quiere crear una cuenta reseetea los valores
             email.value = null;

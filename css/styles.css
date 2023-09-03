@@ -272,7 +272,27 @@ a.custom-card:hover {
   display: flex;
   flex-flow: row wrap;
 }
-
 .btn-price{
   border-radius: 10px;
+}
+
+.btn-order-group{
+  display: flex;
+  flex-direction: row;
+  width: 20%;
+  padding: 3px;
+  align-items: center;
+  justify-content: center;
+}
+.orderButton {
+ width: 50px;
+ height: 40px;
+ margin-right: 10px;
+align-items: center;
+justify-content: center;
+border: white;
+background-color: white;
+}
+.imgDA{
+width:36px;
 }
