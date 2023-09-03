@@ -22,7 +22,7 @@ fetch(API_URL)
 function placeItems(products, filter = /./){ // Si solo se le pasa la lista pone todos los elementos, si además se le pasa una condición (expresión regular) filtra los elementos teniendo en cuenta la condicion
     container.innerHTML = ""
     for (let i = 0; i < products.length; i++) {        
-        if(filter.test(products[i].name)){
+        if(filter.test(products[i].name) || filter.test(products[i].description)){
             filter.lastIndex = 0
             const paragraph = document.createElement("p");
             paragraph.innerText = products[i].name;
