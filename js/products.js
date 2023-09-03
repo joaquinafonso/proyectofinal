@@ -9,6 +9,8 @@ const sortDescBtn = document.getElementById('ordenDesendente')
 const sortByCount = document.getElementById('ordenRelevancia')
 
 
+let productList = []; 
+
 fetch(API_URL)
 .then(response => response.json())
 .then(data => {
@@ -101,6 +103,7 @@ function getValues() {
 
 const clearRange = document.getElementById('clearRangeFilter')
 clearRange.addEventListener('click', clearInputs)
+
 
 
 function clearInputs(event){
