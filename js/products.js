@@ -93,7 +93,6 @@ function getValues() {
         productList.sort((a, b) => a.id - b.id)
     }
     
-    // const sortBy = document.getElementById('sortBy').value;
     let filterProducts = productList.filter((el)=> el.cost <= maxPrice && el.cost >= minPrice)
     return filterProducts
 }
