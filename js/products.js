@@ -100,13 +100,12 @@ function getValues() {
 
 
 const clearRange = document.getElementById('clearRangeFilter')
-clearRange.addEventListener('input', function () {console.log('a')})
+clearRange.addEventListener('click', clearInputs)
 
-console.log(clearRange)
 
 function clearInputs(event){
-    //document.getElementById('rangeFilterCountMin').value = 0
-    //document.getElementById('rangeFilterCountMax').value = 0
-    console.log('a', event)
-    //placeItems(productList)
+    document.getElementById('rangeFilterCountMin').value = 0
+    document.getElementById('rangeFilterCountMax').value = 0
+    searcher.value= null;
+    placeItems(productList)
 }
