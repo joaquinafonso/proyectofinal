@@ -3,7 +3,6 @@ const container = document.getElementById('productsGrid');
 const API_URL = `https://japceibal.github.io/emercado-api/cats_products/${categoryProduct}.json`//concatena la variable para que acceda al JSON con el número de categoría
 const searcher = document.getElementById("searcher")
 const filterForm = document.getElementById('rangeFilterCount');
-let productList;
 const sortAscBtn = document.getElementById('ordenAscendente')
 const sortDescBtn = document.getElementById('ordenDesendente')
 const sortByCount = document.getElementById('ordenRelevancia')
@@ -17,7 +16,7 @@ fetch(API_URL)
         productList = data.products;
         placeItems(productList)
     })
-    .catch(error => console.error('Error:', error));
+.catch(error => console.error('Error:', error));
 
     
     
