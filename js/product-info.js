@@ -1,0 +1,1 @@
+const prodID = localStorage.getItem("productID");

@@ -18,7 +18,10 @@ fetch(API_URL)
     })
 .catch(error => console.error('Error:', error));
 
-    
+function setProductID(id){
+    localStorage.setItem('ProductID',id);
+    window.location ='product-info.html';
+}   
     
 function placeItems(products, filter = /./){ // Si solo se le pasa la lista pone todos los elementos, si además se le pasa una condición (expresión regular) filtra los elementos teniendo en cuenta la condicion
     container.innerHTML = ""
@@ -30,7 +33,14 @@ function placeItems(products, filter = /./){ // Si solo se le pasa la lista pone
             let div = document.createElement('div')
             div.classList = ('col-md-3')
 
-            div.innerHTML = `<div class='card' style='width: auto;'><img src='${products[i].image}' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>${products[i].name}</h5><p class='card-text'>${products[i].description}</p><span class='btn btn-primary btn-price'>${products[i].currency} ${products[i].cost}</span></div></div>`
+            div.innerHTML = `
+            <div onclick="setProductID(${products[i].id})"class='card' style='width: auto;'>
+                <img src='${products[i].image}' class='card-img-top' alt='...'>
+                <div class='card-body'><h5 class='card-title'>${products[i].name}</h5>
+                     <p class='card-text'>${products[i].description}</p>
+                    <span class='btn btn-primary btn-price'>${products[i].currency} ${products[i].cost}</span>
+                 </div>
+            </div>`
 
             container.appendChild(div)
         }
