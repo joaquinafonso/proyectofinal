@@ -17,7 +17,8 @@ function ready(productItem, comments) {
     description.classList = ('col-md-3')
     description.innerHTML = `
         <div class='productBody'>
-            <h3 class='productItemInfo'>${productItem.name}</h3><hr>
+            <h3 class='productItemInfo'>${productItem.name}</h3>
+            <hr>
             <h3 class='productItemTitle'>Precio</h3>
             <p class='productItemInfo'>${productItem.currency} ${productItem.cost}</p>
             <h3 class='productItemTitle'>Descripción</h3>
@@ -42,8 +43,24 @@ function ready(productItem, comments) {
     
         const commentsSection = document.createElement('section')
         for(let element of comments){
-            let comment = document.createElement('p')
-            comment.innerHTML = element.description
+            let comment = document.createElement('div')
+
+            let commentInfo = document.createElement('q')
+            commentInfo.innerHTML = element.description
+            comment.appendChild(commentInfo)
+
+            let countStar = element.score
+            for(let i = 0; i < 5; i++){
+                let star = document.createElement('span')
+                if(countStar > 0){
+                    star.classList = 'fa fa-star checked'
+                    countStar --
+                }else{
+                    star.classList = 'fa fa-star'
+                }
+                comment.appendChild(star)
+            }
+
             commentsSection.appendChild(comment)
         }
         container.appendChild(commentsSection)

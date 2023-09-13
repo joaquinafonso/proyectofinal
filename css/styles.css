@@ -296,3 +296,6 @@ background-color: white;
 .imgDA{
 width:36px;
 }
+.checked {
+  color: orange;
+}
