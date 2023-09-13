@@ -1,37 +1,53 @@
 let container = document.getElementById('product-info-container')
 let productId = localStorage.getItem('currentProduct')
+const API_URL = PRODUCT_INFO_URL + productId + ".json"
+const COMMENTS_URL = PRODUCT_INFO_COMMENTS_URL + productId + ".json"
 
-fetch(PRODUCT_INFO_URL+productId+'.json')
-.then(response => response.json())
-.then(data => {
-        productItem = data;
-        console.log(productItem)
-
-        let div = document.createElement('div')
-        div.classList = ('col-md-3')
-        div.innerHTML = `<div class='productBody'>
-            <div>
-                <h3 class='productItemInfo'>${productItem.name}</h3><hr>
-                <h3 class='productItemTitle'>Precio</h3>
-                <p class='productItemInfo'>${productItem.currency} ${productItem.cost}</p>
-                <h3 class='productItemTitle'>Descripción</h3>
-                <p class='productItemInfo'>${productItem.description}</p>
-                <h3 class='productItemTitle'>Categoría</h3>
-                <p class='productItemInfo'>${productItem.category}</p>
-                <h3 class='productItemTitle'>Cantidad de vendidos</h3>
-                <p class='productItemInfo'>${productItem.soldCount}</p>
-                <h3>Imagenes ilustrativas</h3>
-            </div>
-            <div class='productItemImages'>
-                <img src='${productItem.images[0]}' width='40%'></img>
-                <img src='${productItem.images[1]}' width='40%'></img>
-                <img src='${productItem.images[2]}' width='40%'></img>
-                <img src='${productItem.images[3]}' width='40%'></img>
-            </div>
-        </div>`
-        
-        container.appendChild(div)
+fetch(API_URL)
+    .then(response => response.json())
+    .then(data => {
+        fetch(COMMENTS_URL)
+            .then(response => response.json())
+            .then((comments) => ready(data, comments))
     })
-.catch(error => console.error('Error:', error));
+    .catch(error => console.error('Error:', error));
+
+function ready(productItem, comments) {
+    const description = document.createElement('section')
+    description.classList = ('col-md-3')
+    description.innerHTML = `
+        <div class='productBody'>
+            <h3 class='productItemInfo'>${productItem.name}</h3><hr>
+            <h3 class='productItemTitle'>Precio</h3>
+            <p class='productItemInfo'>${productItem.currency} ${productItem.cost}</p>
+            <h3 class='productItemTitle'>Descripción</h3>
+            <p class='productItemInfo'>${productItem.description}</p>
+            <h3 class='productItemTitle'>Categoría</h3>
+            <p class='productItemInfo'>${productItem.category}</p>
+            <h3 class='productItemTitle'>Cantidad de vendidos</h3>
+            <p class='productItemInfo'>${productItem.soldCount}</p>
+            <h3>Imagenes ilustrativas</h3>
+        </div>`
+        container.appendChild(description)
+
+        const imagesSection = document.createElement('section')
+        imagesSection.classList = 'productItemImages'
+        for(let url of productItem.images){
+            let img = document.createElement('img')
+            img.src = url
+            img.width = "200"
+            imagesSection.appendChild(img)
+        }
+        container.appendChild(imagesSection)
+    
+        const commentsSection = document.createElement('section')
+        for(let element of comments){
+            let comment = document.createElement('p')
+            comment.innerHTML = element.description
+            commentsSection.appendChild(comment)
+        }
+        container.appendChild(commentsSection)
+
+}
 
 console.log(productId)
