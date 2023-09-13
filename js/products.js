@@ -7,6 +7,10 @@ const sortAscBtn = document.getElementById('ordenAscendente')
 const sortDescBtn = document.getElementById('ordenDesendente')
 const sortByCount = document.getElementById('ordenRelevancia')
 
+function setProductId(id){
+    localStorage.setItem('currentProduct', id);
+    window.location = "product-info.html";
+}
 
 let productList = []; 
 
@@ -30,12 +34,14 @@ function placeItems(products, filter = /./){ // Si solo se le pasa la lista pone
             let div = document.createElement('div')
             div.classList = ('col-md-3')
 
-            div.innerHTML = `<div class='card' style='width: auto;'><img src='${products[i].image}' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>${products[i].name}</h5><p class='card-text'>${products[i].description}</p><span class='btn btn-primary btn-price'>${products[i].currency} ${products[i].cost}</span></div></div>`
+            div.innerHTML = `<div class='card' style='width: auto;' onclick=setProductId(${products[i].id})><img src='${products[i].image}' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>${products[i].name}</h5><p class='card-text'>${products[i].description}</p><span class='btn btn-primary btn-price'>${products[i].currency} ${products[i].cost}</span></div></div>`
 
             container.appendChild(div)
         }
     }
 }
+
+
 
 searcher.addEventListener('input', filterProducts)
 
