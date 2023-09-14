@@ -84,6 +84,8 @@ function ready(productItem, comments) {
                 user: JSON.parse(localStorage.getItem('register')).actualUser,
                 dateTime: date + ' ' + new Date().toLocaleTimeString()
             }, commentsSection)
+            evt.target[0].value = ''
+            evt.target[1].value = 0
         }else{ // Si faltan datos muestra una alerta
             missing_values.style.display = 'block'
             setTimeout(()=>{missing_values.style.display = 'none'}, 5000)
