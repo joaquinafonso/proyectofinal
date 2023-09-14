@@ -46,8 +46,12 @@ function ready(productItem, comments) {
         
         for(let element of comments){
             let comment = document.createElement('div')
-
-            let commentInfo = document.createElement('q')
+            let commentUser = element.user
+            let commentDateTime = element.dateTime
+            let commentBody = document.createElement('q')
+            commentBody.innerHTML = `${element.description}`
+            let commentInfo = document.createElement('p')
+            commentInfo.innerHTML = `${commentUser}&nbsp&nbsp${commentDateTime}`
             comment.appendChild(commentInfo)
             comment.appendChild(commentBody)
 
