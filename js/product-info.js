@@ -91,6 +91,7 @@ function ready(productItem, comments) {
     }
 }
     
+
 function addComment(element, commentsSection){
     let comment = document.createElement('div')
     comment.classList = 'comment'
