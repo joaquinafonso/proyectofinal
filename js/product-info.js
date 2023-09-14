@@ -29,42 +29,85 @@ function ready(productItem, comments) {
             <p class='productItemInfo'>${productItem.soldCount}</p>
             <h3>Imagenes ilustrativas</h3>
         </div>`
-        container.appendChild(description)
+    container.appendChild(description)
 
-        const imagesSection = document.createElement('section')
-        imagesSection.classList = 'productItemImages'
-        for(let url of productItem.images){
-            let img = document.createElement('img')
-            img.src = url
-            img.width = "200"
-            imagesSection.appendChild(img)
-        }
-        container.appendChild(imagesSection)
+    const imagesSection = document.createElement('section')
+    imagesSection.classList = 'productItemImages'
+    for(let url of productItem.images){
+        let img = document.createElement('img')
+        img.src = url
+        img.width = "200"
+        imagesSection.appendChild(img)
+    }
+    container.appendChild(imagesSection)
     
-        const commentsSection = document.createElement('section')
-        for(let element of comments){
-            let comment = document.createElement('div')
+    const commentsSection = document.createElement('section')
+    commentsSection.classList = 'comments'
+    for(let element of comments){
+        addComment(element, commentsSection)
+    }
+    container.appendChild(commentsSection)
 
-            let commentInfo = document.createElement('q')
-            commentInfo.innerHTML = element.description
-            comment.appendChild(commentInfo)
-
-            let countStar = element.score
-            for(let i = 0; i < 5; i++){
-                let star = document.createElement('span')
-                if(countStar > 0){
-                    star.classList = 'fa fa-star checked'
-                    countStar --
-                }else{
-                    star.classList = 'fa fa-star'
-                }
-                comment.appendChild(star)
-            }
-
-            commentsSection.appendChild(comment)
-        }
-        container.appendChild(commentsSection)
-
+    const commentForm = document.createElement('form')
+    commentForm.classList = 'addComment'
+    commentForm.innerHTML = `
+    <h3>Comentar</h3>
+    <p>Tu opinión:</p>
+    <textarea></textarea>
+    <p>Tu puntuación:</p>
+    <select>
+        <option value="0"></option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+    <input type="submit">
+    `
+    commentForm.addEventListener('submit', addNewComment)
+    container.appendChild(commentForm)
+    function addNewComment(evt){
+        evt.preventDefault()
+        let comment = [evt.target[0]]
+        console.log(evt.target[0].value, evt.target[1].value, JSON.parse(localStorage.getItem('register')).actualUser, new Date())
+        addComment({
+            description: evt.target[0].value,
+            score: evt.target[1].value,
+            user: JSON.parse(localStorage.getItem('register')).actualUser,
+            dateTime: new Date()
+        }, commentsSection)
+    }
 }
+    
+function addComment(element, commentsSection){
+    let comment = document.createElement('div')
 
-console.log(productId)
+    let user = document.createElement('strong')
+    user.innerHTML = element.user
+    comment.appendChild(user)
+
+    let date = document.createElement('strong')
+    date.innerHTML = element.dateTime
+    comment.appendChild(date)
+
+    
+    let countStar = element.score
+    for(let i = 0; i < 5; i++){
+        let star = document.createElement('span')
+        if(countStar > 0){
+            star.classList = 'fa fa-star checked'
+            countStar --
+        }else{
+            star.classList = 'fa fa-star'
+        }
+        comment.appendChild(star)
+    }
+    commentsSection.appendChild(comment)
+    
+    comment.innerHTML += "<br>"
+
+    let commentInfo = document.createElement('q')
+    commentInfo.innerHTML = element.description
+    comment.appendChild(commentInfo)
+}
