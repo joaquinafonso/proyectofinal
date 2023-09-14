@@ -285,17 +285,68 @@ a.custom-card:hover {
   justify-content: center;
 }
 .orderButton {
- width: 50px;
- height: 40px;
- margin-right: 10px;
-align-items: center;
-justify-content: center;
-border: white;
-background-color: white;
+  width: 50px;
+  height: 40px;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+  border: white;
+  background-color: white;
 }
 .imgDA{
 width:36px;
 }
 .checked {
   color: orange;
+}
+.productComments {
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+}
+
+.productComments div {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+.productImage{
+  width: 20vw;
+  margin: 10px;
+}
+#productBody{
+  width: 90vw;
+  margin: 0;
+  padding: 0;
+  font-size: 125%;
+}
+#commentsSection{
+  margin-top: 50px;
+}
+#commentTitle{
+  text-align: left; 
+}
+.comment{
+  
+}
+.commentName, .commentDate, .commentScore{
+  margin-right: 10px;
+  width: 20vw;
+}
+.addComment{
+  font-size: 125%;
+  margin-top: 30px;
+}
+#newComment{
+  width: 50vw;
+  height: 10vw;
+}
+#selectScore{
+  width: 100px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+.newCommentTitle{
+  margin-bottom: 0;
 }

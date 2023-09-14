@@ -2,7 +2,9 @@ let container = document.getElementById('product-info-container')
 let productId = localStorage.getItem('currentProduct')
 const API_URL = PRODUCT_INFO_URL + productId + ".json"
 const COMMENTS_URL = PRODUCT_INFO_COMMENTS_URL + productId + ".json"
+let missing_values = document.getElementById("faltan_datos")
 
+missing_values.style.display = 'none'
 fetch(API_URL)
     .then(response => response.json())
     .then(data => {
@@ -16,18 +18,18 @@ function ready(productItem, comments) {
     const description = document.createElement('section')
     description.classList = ('col-md-3')
     description.innerHTML = `
-        <div class='productBody'>
-            <h3 class='productItemInfo'>${productItem.name}</h3>
+        <div id='productBody'>
+            <h1 class='productItemInfo'>${productItem.name}</h1>
             <hr>
-            <h3 class='productItemTitle'>Precio</h3>
+            <strong class='productItemTitle'>Precio</strong>
             <p class='productItemInfo'>${productItem.currency} ${productItem.cost}</p>
-            <h3 class='productItemTitle'>Descripción</h3>
+            <strong class='productItemTitle'>Descripción</strong>
             <p class='productItemInfo'>${productItem.description}</p>
-            <h3 class='productItemTitle'>Categoría</h3>
+            <strong class='productItemTitle'>Categoría</strong>
             <p class='productItemInfo'>${productItem.category}</p>
-            <h3 class='productItemTitle'>Cantidad de vendidos</h3>
+            <strong class='productItemTitle'>Cantidad de vendidos</strong>
             <p class='productItemInfo'>${productItem.soldCount}</p>
-            <h3>Imagenes ilustrativas</h3>
+            <strong>Imagenes ilustrativas</strong>
         </div>`
     container.appendChild(description)
 
@@ -35,14 +37,18 @@ function ready(productItem, comments) {
     imagesSection.classList = 'productItemImages'
     for(let url of productItem.images){
         let img = document.createElement('img')
+        img.classList = 'productImage'
         img.src = url
-        img.width = "200"
         imagesSection.appendChild(img)
     }
     container.appendChild(imagesSection)
     
     const commentsSection = document.createElement('section')
-    commentsSection.classList = 'comments'
+    commentsSection.id = 'commentsSection'
+    const commentTitle = document.createElement('h2')
+    commentTitle.innerHTML = 'Comentarios'
+    commentTitle.id = 'commentTitle'
+    commentsSection.appendChild(commentTitle)
     for(let element of comments){
         addComment(element, commentsSection)
     }
@@ -52,10 +58,10 @@ function ready(productItem, comments) {
     commentForm.classList = 'addComment'
     commentForm.innerHTML = `
     <h3>Comentar</h3>
-    <p>Tu opinión:</p>
-    <textarea></textarea>
-    <p>Tu puntuación:</p>
-    <select>
+    <p class='newCommentTitle'>Tu opinión:</p>
+    <textarea id='newComment'></textarea>
+    <p class='newCommentTitle'>Tu puntuación:</p>
+    <select id='selectScore'>
         <option value="0"></option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -63,36 +69,45 @@ function ready(productItem, comments) {
         <option value="4">4</option>
         <option value="5">5</option>
     </select>
-    <input type="submit">
+    <br>
+    <input type="submit" class='btn btn-primary'>
     `
     commentForm.addEventListener('submit', addNewComment)
     container.appendChild(commentForm)
     function addNewComment(evt){
         evt.preventDefault()
         let date = new Date().toLocaleDateString().replace(/(\d+)\/(\d+)\/(\d+)/g, '$3-$2-$1')
-        console.log(date)
-        addComment({
-            description: evt.target[0].value,
-            score: evt.target[1].value,
-            user: JSON.parse(localStorage.getItem('register')).actualUser,
-            dateTime: date + ' ' + new Date().toLocaleTimeString()
-        }, commentsSection)
+        if(evt.target[0].value != '' && evt.target[1].value != 0){
+            addComment({
+                description: evt.target[0].value,
+                score: evt.target[1].value,
+                user: JSON.parse(localStorage.getItem('register')).actualUser,
+                dateTime: date + ' ' + new Date().toLocaleTimeString()
+            }, commentsSection)
+        }else{ // Si faltan datos muestra una alerta
+            missing_values.style.display = 'block'
+            setTimeout(()=>{missing_values.style.display = 'none'}, 5000)
+        }
     }
 }
     
 function addComment(element, commentsSection){
     let comment = document.createElement('div')
+    comment.classList = 'comment'
 
     let user = document.createElement('strong')
+    user.classList = 'commentName'
     user.innerHTML = element.user
     comment.appendChild(user)
 
-    let date = document.createElement('strong')
+    let date = document.createElement('em')
+    date.classList = 'commentDate'
     date.innerHTML = element.dateTime
     comment.appendChild(date)
 
     
     let countStar = element.score
+    countStar.classList = 'commentScore'
     for(let i = 0; i < 5; i++){
         let star = document.createElement('span')
         if(countStar > 0){
@@ -104,7 +119,8 @@ function addComment(element, commentsSection){
         comment.appendChild(star)
     }
     commentsSection.appendChild(comment)
-    
+    commentsSection.classList = 'productComments'
+
     comment.innerHTML += "<br>"
 
     let commentInfo = document.createElement('q')
