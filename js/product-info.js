@@ -42,12 +42,18 @@ function ready(productItem, comments) {
         container.appendChild(imagesSection)
     
         const commentsSection = document.createElement('section')
+        commentsSection.classList = 'productComments';
+        
         for(let element of comments){
             let comment = document.createElement('div')
-
-            let commentInfo = document.createElement('q')
-            commentInfo.innerHTML = element.description
+            let commentUser = element.user
+            let commentDateTime = element.dateTime
+            let commentBody = document.createElement('q')
+            commentBody.innerHTML = `${element.description}`
+            let commentInfo = document.createElement('p')
+            commentInfo.innerHTML = `${commentUser}&nbsp&nbsp${commentDateTime}`
             comment.appendChild(commentInfo)
+            comment.appendChild(commentBody)
 
             let countStar = element.score
             for(let i = 0; i < 5; i++){
