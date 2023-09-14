@@ -69,13 +69,13 @@ function ready(productItem, comments) {
     container.appendChild(commentForm)
     function addNewComment(evt){
         evt.preventDefault()
-        let comment = [evt.target[0]]
-        console.log(evt.target[0].value, evt.target[1].value, JSON.parse(localStorage.getItem('register')).actualUser, new Date())
+        let date = new Date().toLocaleDateString().replace(/(\d+)\/(\d+)\/(\d+)/g, '$3-$2-$1')
+        console.log(date)
         addComment({
             description: evt.target[0].value,
             score: evt.target[1].value,
             user: JSON.parse(localStorage.getItem('register')).actualUser,
-            dateTime: new Date()
+            dateTime: date + ' ' + new Date().toLocaleTimeString()
         }, commentsSection)
     }
 }
