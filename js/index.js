@@ -22,3 +22,27 @@ document.addEventListener("DOMContentLoaded", function(){
         window.location = "products.html"
     });
 });
+
+
+const modoNocturnoBtn = document.getElementById("modoNocturnoBtn");
+const body = document.body;
+
+function changeMode() {
+  if (body.classList.contains("night-mode")) {
+    body.classList.remove("night-mode");
+    localStorage.setItem("modo", "diurno");
+  } else {
+    body.classList.add("night-mode");
+    localStorage.setItem("modo", "nocturno");
+  }
+}
+
+nightModeBtn.addEventListener("click", changeMode);
+
+// Verifica el estado del modo al cargar la página
+window.addEventListener("load", () => {
+  const actualMode = localStorage.getItem("modo");
+  if (actualMode === "nocturno") {
+    body.classList.add("night-mode");
+  }
+});
