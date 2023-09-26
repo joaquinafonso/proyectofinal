@@ -221,18 +221,6 @@ a.custom-card:hover {
   height: 15%;
 }
 
-#endSession {
-  background-color: #9F91CC;
-  color: #3D246C;
-  width: 15%;
-  height: 15%;
-}
-
-#endSession:hover {
-  background-color: #5C4B99;
-  font-weight: 700;
-}
-
 .loginbutton:hover {
   background-color: #5C4B99;
   font-weight: 700;
@@ -351,4 +339,8 @@ width:36px;
 .newCommentTitle{
   margin-bottom: 0;
 
+}
+
+.dropdown-item{
+  cursor: pointer;
 }
