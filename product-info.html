@@ -10,6 +10,7 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link href="css/product-info.css" rel="stylesheet">
 </head>
 
 <body>
@@ -37,17 +38,29 @@
       </div>
     </div>
   </nav>
-  
   <main>
     <section id="alertas">
       <div class="alert alert-danger text-center" role="alert" id="faltan_datos">
         <h4 class="alert-heading">Faltan Datos</h4>
       </div>
     </section>
+    
+    <div class="container-fluid" id="product-info-container"> </div>
 
-    <div class="container-fluid" id="product-info-container">
 
+    <div id="images" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner" id="carousel">
+      </div>
+      <button id="left-button" class="carousel-control-prev" type="button" data-bs-target="#images" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button id="right-button" class="carousel-control-next" type="button" data-bs-target="#images" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
+      
   </main>
   <footer class="text-muted">
     <div class="container">
