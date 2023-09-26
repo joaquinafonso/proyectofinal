@@ -344,3 +344,8 @@ width:36px;
 .dropdown-item{
   cursor: pointer;
 }
+
+body.night-mode {
+  background-color: #333;
+  color: #fff;
+}

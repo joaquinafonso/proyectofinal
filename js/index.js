@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 
-const modoNocturnoBtn = document.getElementById("modoNocturnoBtn");
+const nightModeBtn = document.getElementById("nightModeBtn");
 const body = document.body;
 
 function changeMode() {
