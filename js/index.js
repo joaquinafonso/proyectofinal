@@ -23,26 +23,3 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 });
 
-
-const nightModeBtn = document.getElementById("nightModeBtn");
-const body = document.body;
-
-function changeMode() {
-  if (body.classList.contains("night-mode")) {
-    body.classList.remove("night-mode");
-    localStorage.setItem("modo", "diurno");
-  } else {
-    body.classList.add("night-mode");
-    localStorage.setItem("modo", "nocturno");
-  }
-}
-
-nightModeBtn.addEventListener("click", changeMode);
-
-// Verifica el estado del modo al cargar la página
-window.addEventListener("load", () => {
-  const actualMode = localStorage.getItem("modo");
-  if (actualMode === "nocturno") {
-    body.classList.add("night-mode");
-  }
-});

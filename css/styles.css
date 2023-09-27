@@ -316,9 +316,7 @@ width:36px;
 #commentTitle{
   text-align: left; 
 }
-.comment{
-  
-}
+
 .commentName, .commentDate, .commentScore{
   margin-right: 10px;
   width: 20vw;
@@ -345,7 +343,18 @@ width:36px;
   cursor: pointer;
 }
 
-body.night-mode {
+.night-mode{
+  background-color: #333;
+  background: #333;
+  color: #fff;
+}
+*.night-mode *:not(span, .comment, nav), *.night-mode section *:not(span, .comment){
   background-color: #333;
   color: #fff;
+}
+
+*.night-mode *:is(.card, .comment, .list-group-item ) *:not(span), *.night-mode *:is(.card, .comment, .list-group-item ){
+  background: #444;
+  color: #fff;
+
 }
