@@ -91,9 +91,28 @@ function ready(productItem, comments) {
             setTimeout(()=>{missing_values.style.display = 'none'}, 5000)
         }
     }
+    
+    
+   for (element of productItem.relatedProducts){showRelated(element)}
+    
+    
+}
+const relactedSection = document.getElementById('relatedSection')
+function showRelated(relatedProd) {
+    let relatedElement = document.createElement('div')
+    relatedElement.classList = 'card col-md-3'
+    relatedElement.addEventListener('click', ()=>{
+        localStorage.setItem('currentProduct', relatedProd.id)
+        window.location = "product-info.html"
+    })
+    relatedElement.innerHTML = `
+        <img class="img-thumbnail" src=${relatedProd.image}></img>
+        <h3 class="relatedName">${relatedProd.name}</h3>
+    `
+    relatedSection.appendChild(relatedElement)
 }
     
-
+    
 function addComment(element, commentsSection){
     let comment = document.createElement('div')
     comment.classList = 'comment'

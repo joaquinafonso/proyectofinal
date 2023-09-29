@@ -238,7 +238,7 @@ a.custom-card:hover {
 .card{
   position: relative;
   margin: 10px;
-  height: 400px;
+  height: 90%;
   padding: 20px;
   border-radius: 10px;
 }
@@ -336,9 +336,7 @@ width:36px;
 }
 .newCommentTitle{
   margin-bottom: 0;
-
 }
-
 .dropdown-item{
   cursor: pointer;
 }
@@ -352,9 +350,11 @@ width:36px;
   background-color: #333;
   color: #fff;
 }
-
 *.night-mode *:is(.card, .comment, .list-group-item ) *:not(span), *.night-mode *:is(.card, .comment, .list-group-item ){
   background: #444;
   color: #fff;
+}
 
+#relatedSection{
+  display: flex;
 }
