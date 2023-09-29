@@ -97,19 +97,20 @@ function ready(productItem, comments) {
     
     
 }
-    const relactedSection = document.getElementById('relatedSection')
-    function showRelated(relatedProd) {
-    let relatedElement = document.createElement('div');
+const relactedSection = document.getElementById('relatedSection')
+function showRelated(relatedProd) {
+    let relatedElement = document.createElement('div')
+    relatedElement.classList = 'card col-md-3'
     relatedElement.addEventListener('click', ()=>{
-  localStorage.setItem('currentProduct', relatedProd.id);
-  window.location = "product-info.html";
+        localStorage.setItem('currentProduct', relatedProd.id)
+        window.location = "product-info.html"
     })
     relatedElement.innerHTML = `
         <img class="img-thumbnail" src=${relatedProd.image}></img>
-        <p class="relatedName">${relatedProd.name}</p>
+        <h3 class="relatedName">${relatedProd.name}</h3>
     `
-    relatedSection.appendChild(relatedElement);
-    };
+    relatedSection.appendChild(relatedElement)
+}
     
     
 function addComment(element, commentsSection){
