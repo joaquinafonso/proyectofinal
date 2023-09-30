@@ -354,3 +354,13 @@ width:36px;
   color: #fff;
 }
 
+button#right-button{
+  background-color: #3338;
+  width: 5vw;
+  right: 22vw;
+}
+button#left-button{
+  background-color: #3338;
+  width: 5vw;
+  left: 25vw;
+}
