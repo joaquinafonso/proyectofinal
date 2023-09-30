@@ -69,3 +69,26 @@ let getJSONData = function(url){
         return result;
     });
 }
+
+function changeMode() {
+  let actual = localStorage.getItem('actual-mode')
+  if (actual == 'light') {
+    document.body.classList.add("night-mode");
+    localStorage.setItem("actual-mode", "dark");
+  } else {
+    document.body.classList.remove("night-mode");
+    localStorage.setItem("actual-mode", "light");
+  }
+}
+
+const mode = document.getElementById('formSwitch')
+
+let actualMode = localStorage.getItem('actual-mode')
+if(actualMode == undefined){
+  actualMode = 'light'
+  localStorage.setItem('actual-mode', 'light')
+}else if(actualMode == 'dark'){
+  document.body.classList.add("night-mode");
+}
+
+mode.addEventListener("click", changeMode);

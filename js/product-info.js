@@ -16,7 +16,6 @@ fetch(API_URL)
 
 function ready(productItem, comments) {
     const description = document.createElement('section')
-    description.classList = ('col-md-3')
     description.innerHTML = `
         <div id='productBody'>
             <h1 class='productItemInfo'>${productItem.name}</h1>
@@ -92,9 +91,30 @@ function ready(productItem, comments) {
             setTimeout(()=>{missing_values.style.display = 'none'}, 5000)
         }
     }
+    
+    
+   for (element of productItem.relatedProducts){showRelated(element)}
+    
+    
+}
+const relactedSection = document.getElementById('relatedSection')
+function showRelated(relatedProd) {
+    let relatedElement = document.createElement('div')
+    relatedElement.classList = 'col-md-3'
+    relatedElement.addEventListener('click', ()=>{
+        localStorage.setItem('currentProduct', relatedProd.id)
+        window.location = "product-info.html"
+    })
+    relatedElement.innerHTML = `
+        <div class='card'>
+            <img class="img-thumbnail" src=${relatedProd.image}></img>
+            <h3 class="relatedName">${relatedProd.name}</h3>
+        <div>
+    `
+    relatedSection.appendChild(relatedElement)
 }
     
-
+    
 function addComment(element, commentsSection){
     let comment = document.createElement('div')
     comment.classList = 'comment'
