@@ -1,0 +1,15 @@
+#left-button{
+    left: 20vw;
+}
+#right-button{
+    right: 20vw;
+}
+#carousel{
+}
+#images{
+    display: flex;
+    align-items: center;
+}
+.image{
+    margin-left: 25vw;
+}

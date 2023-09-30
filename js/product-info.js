@@ -32,15 +32,16 @@ function ready(productItem, comments) {
         </div>`
     container.appendChild(description)
 
-    const imagesSection = document.createElement('section')
-    imagesSection.classList = 'productItemImages'
+    const imagesSection = document.getElementById("carousel")
+    
     for(let url of productItem.images){
-        let img = document.createElement('img')
-        img.classList = 'productImage'
-        img.src = url
-        imagesSection.appendChild(img)
+        imagesSection.innerHTML += `
+        <div class="carousel-item image">
+            <img src=${url} class="d-block w-50">
+        </div>`
     }
-    container.appendChild(imagesSection)
+    imagesSection.lastChild.classList = 'carousel-item active image'
+    container.appendChild(imagesSection.parentNode)
     
     const commentsSection = document.createElement('section')
     commentsSection.id = 'commentsSection'
