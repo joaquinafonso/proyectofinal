@@ -93,11 +93,11 @@ function ready(productItem, comments) {
     }
     
     
-   for (element of productItem.relatedProducts){showRelated(element)}
-    
-    
+    for (element of productItem.relatedProducts){
+        showRelated(element)
+    }
 }
-const relactedSection = document.getElementById('relatedSection')
+const relatedSection = document.getElementById('relatedSection')
 function showRelated(relatedProd) {
     let relatedElement = document.createElement('div')
     relatedElement.classList = 'col-md-3'
