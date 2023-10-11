@@ -26,10 +26,10 @@ function ready(productItem, comments) {
     }
     description.innerHTML = `
         <div id='productBody'>
+            <button class='btn btn-success' style="position: absolute; right: 10vw; margin-top: 1rem;" onclick='adToCart(${JSON.stringify(data)})'> Comprar </button>
             <h1 class='productItemInfo'>${productItem.name}</h1>
-            <button onclick='adToCart(${JSON.stringify(data)})'> Comprar </button>
             <hr>
-            <button onClick="window.location = 'products.html'" >Volver al listado</button>
+            <button class='btn btn-outline-secondary' style="position: absolute; right: 10vw; margin-top: 1rem;" onClick="window.location = 'products.html'" >Volver al listado</button>
             <strong class='productItemTitle'>Precio</strong>
             <p class='productItemInfo'>${productItem.currency} ${productItem.cost}</p>
             <strong class='productItemTitle'>Descripción</strong>
