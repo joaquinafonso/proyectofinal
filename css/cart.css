@@ -1,0 +1,20 @@
+.article{
+    display: grid;
+    grid-template-columns: 1fr 3fr 3fr 1fr 2fr;
+    grid-gap: 10px;
+    grid-auto-rows: min(1rem, 50px);
+    margin: 0 2vw;
+}
+.article img{
+    height: 4rem;
+}
+.article input{
+    width: 3rem;
+    height: 2rem;   
+}
+#cart{
+    margin: 2vw;
+}
+.article-title{
+    font-weight: bold;
+}
