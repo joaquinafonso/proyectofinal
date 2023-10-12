@@ -48,11 +48,11 @@
       </div>
     </div>
   </nav>
-  <div class="row">
+  <div class="row ">
     <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
       <div class="row container p-0 m-0">
         <div class="col">
-          <p class="font-weight-normal text-end my-2">Precio</p>
+          <p class="font-weight-normal text-end my-2 ">Precio</p>
         </div>
         <div class="col">
           <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin">
@@ -66,11 +66,12 @@
             <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
           </div>
         </div>
-        <div class="btn-order-group">
-          <button class="orderButton" id="ordenAscendente"> <img src="img/decendente.jpg" alt="ascending-down-icon" class="imgDA">$</button>
-          <button class="orderButton" id="ordenDesendente"> <img src="img/ascendente.jpg" alt="descending-filter-icon" class="imgDA">$</button>
-          <button class="orderButton" id="ordenRelevancia"> <img src="img/decendente.jpg" alt="ascending-down-icon"class="imgDA">Rel</button>
+        <div class="btn-group btn-order-group" role="group" aria-label="Basic outlined example">
+          <button type="button" class="orderButton btn btn-outline-primary"  id="ordenAscendente" alt="ascending-down-icon">$<i class="fas fa-sort-amount-down mr-1"></i></button>
+          <button type="button" class="orderButton btn btn-outline-primary"  id="ordenDesendente" alt="descending-filter-icon">$<i class="fas fa-sort-amount-up mr-1"></i></button>
+          <button type="button" class="orderButton btn btn-outline-primary"  id="ordenRelevancia" alt="ascending-down-icon" >R<i class="fas fa-sort-amount-down mr-1"></i></button>
         </div>
+       
       </div>
       <section>
         <input type="search" id ="searcher" placeholder="Buscar Productos">
