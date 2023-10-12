@@ -1,15 +1,17 @@
-let container = document.getElementById('product-info-container')
+const container = document.getElementById('product-info-container')
+const relatedSection = document.getElementById('relatedSection')
+
 let productId = localStorage.getItem('currentProduct')
 const API_URL = PRODUCT_INFO_URL + productId + ".json"
 const COMMENTS_URL = PRODUCT_INFO_COMMENTS_URL + productId + ".json"
+
 const missing_values = document.getElementById("faltan_datos")
 const successfullyAdded = document.getElementById('successfully_added')
 const alreadyExist = document.getElementById('already_exists')
-
-
 missing_values.style.display = 'none'
 successfullyAdded.style.display = 'none'
 alreadyExist.style.display = 'none'
+
 
 fetch(API_URL)
     .then(response => response.json())
@@ -18,10 +20,9 @@ fetch(API_URL)
             .then(response => response.json())
             .then((comments) => ready(data, comments))
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => console.error('Error:', error))
 
 function ready(productItem, comments) {
-    const description = document.createElement('section')
     let data = {
         name: productItem.name, 
         id: productItem.id, 
@@ -30,6 +31,7 @@ function ready(productItem, comments) {
         currency: productItem.currency,
         image: productItem.images[0]
     }
+    const description = document.createElement('section')
     description.innerHTML = `
         <div id='productBody'>
             <button class='btn btn-success' style="position: absolute; right: 10vw; margin-top: 1rem;" onclick='adToCart(${JSON.stringify(data)})'> Comprar </button>
@@ -49,7 +51,6 @@ function ready(productItem, comments) {
     container.appendChild(description)
 
     const imagesSection = document.getElementById("carousel")
-    
     for(let url of productItem.images){
         imagesSection.innerHTML += `
         <div class="carousel-item image">
@@ -97,7 +98,6 @@ function ready(productItem, comments) {
     }
 }
 
-const relatedSection = document.getElementById('relatedSection')
 function showRelated(relatedProd) {
     let relatedElement = document.createElement('div')
     relatedElement.classList = 'col-md-3'
