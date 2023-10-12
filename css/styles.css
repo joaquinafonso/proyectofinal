@@ -45,7 +45,7 @@ nav a {
 
 @media (min-width: 800px) {
   .jumbotron {
-    height: 40vh;
+    height: 50vh;
     padding-top: 6rem;
     padding-bottom: 6rem;
   }
