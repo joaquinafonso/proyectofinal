@@ -32,7 +32,7 @@ function placeItems(products, filter = /./){ // Si solo se le pasa la lista pone
             const paragraph = document.createElement("p");
             paragraph.innerText = products[i].name;
             let div = document.createElement('div')
-            div.classList = ('col-md-3')
+            div.classList = ('col-md-6 col-lg-3')
 
             div.innerHTML = `<div class='card' style='width: auto;' onclick=setProductId(${products[i].id})><img src='${products[i].image}' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>${products[i].name}</h5><p class='card-text'>${products[i].description}</p><span class='btn btn-primary btn-price'>${products[i].currency} ${products[i].cost}</span></div></div>`
 
