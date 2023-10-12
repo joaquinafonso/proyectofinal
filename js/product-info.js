@@ -2,9 +2,15 @@ let container = document.getElementById('product-info-container')
 let productId = localStorage.getItem('currentProduct')
 const API_URL = PRODUCT_INFO_URL + productId + ".json"
 const COMMENTS_URL = PRODUCT_INFO_COMMENTS_URL + productId + ".json"
-let missing_values = document.getElementById("faltan_datos")
+const missing_values = document.getElementById("faltan_datos")
+const successfullyAdded = document.getElementById('successfully_added')
+const alreadyExist = document.getElementById('already_exists')
+
 
 missing_values.style.display = 'none'
+successfullyAdded.style.display = 'none'
+alreadyExist.style.display = 'none'
+
 fetch(API_URL)
     .then(response => response.json())
     .then(data => {
@@ -151,5 +157,10 @@ function adToCart (product){
     if(!cart.some((element) => element.id == product.id)){
         cart.push(product)
         localStorage.setItem('cart', JSON.stringify(cart))
+        successfullyAdded.style.display = 'block'
+        setTimeout(()=>{successfullyAdded.style.display = 'none'}, 5000)
+    }else{
+        alreadyExist.style.display = 'block'
+        setTimeout(()=>{alreadyExist.style.display = 'none'}, 5000)
     }
 }
