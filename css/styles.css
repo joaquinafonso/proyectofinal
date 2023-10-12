@@ -29,25 +29,36 @@ nav a {
 }
 
 .jumbotron {
-  height: 50vh;
+  height: 206px;
   padding: 5em inherit;
   margin-bottom: 0;
   background-color: #53C0FB;
   background: url('../img/cover_back.png');
-  background-size: cover;
+  background-size: 100% 100% ; 
   background-position: center;
   background-repeat: no-repeat;
   color: black;
   font-weight: bold;
 }
 
-@media (min-width: 768px) {
+
+
+@media (min-width: 800px) {
   .jumbotron {
+    height: 40vh;
     padding-top: 6rem;
     padding-bottom: 6rem;
   }
 }
 
+@media (max-width: 400px) {
+  .jumbotron {
+    height: 105px;
+  }
+  .orderButton{
+    margin-top: 30px;
+  }
+}
 .jumbotron p:last-child {
   margin-bottom: 0;
 }
