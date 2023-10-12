@@ -15,6 +15,9 @@ let registerEstructure = {
   users: {'admin': 'admin'}
 }
 
+if(localStorage.getItem('cart') === null){
+  localStorage.setItem('cart', '[]')
+}
 if(localStorage.getItem('register') === null || register.isConected === undefined){
   localStorage.setItem('register', JSON.stringify(registerEstructure))
 }

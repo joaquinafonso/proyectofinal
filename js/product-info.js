@@ -16,10 +16,20 @@ fetch(API_URL)
 
 function ready(productItem, comments) {
     const description = document.createElement('section')
+    let data = {
+        name: productItem.name, 
+        id: productItem.id, 
+        count: 1, 
+        unitCost: productItem.cost, 
+        currency: productItem.currency,
+        image: productItem.images[0]
+    }
     description.innerHTML = `
         <div id='productBody'>
+            <button class='btn btn-success' style="position: absolute; right: 10vw; margin-top: 1rem;" onclick='adToCart(${JSON.stringify(data)})'> Comprar </button>
             <h1 class='productItemInfo'>${productItem.name}</h1>
             <hr>
+            <button class='btn btn-outline-secondary' style="position: absolute; right: 10vw; margin-top: 1rem;" onClick="window.location = 'products.html'" >Volver al listado</button>
             <strong class='productItemTitle'>Precio</strong>
             <p class='productItemInfo'>${productItem.currency} ${productItem.cost}</p>
             <strong class='productItemTitle'>Descripción</strong>
@@ -54,26 +64,10 @@ function ready(productItem, comments) {
     }
     container.appendChild(commentsSection)
 
-    const commentForm = document.createElement('form')
-    commentForm.classList = 'addComment'
-    commentForm.innerHTML = `
-    <h3>Comentar</h3>
-    <p class='newCommentTitle'>Tu opinión:</p>
-    <textarea id='newComment'></textarea>
-    <p class='newCommentTitle'>Tu puntuación:</p>
-    <select id='selectScore'>
-        <option value="0"></option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-    </select>
-    <br>
-    <input type="submit" class='btn btn-primary'>
-    `
+    const commentForm = document.getElementById('commentForm')
     commentForm.addEventListener('submit', addNewComment)
     container.appendChild(commentForm)
+
     function addNewComment(evt){
         evt.preventDefault()
         let date = new Date().toLocaleDateString().replace(/(\d+)\/(\d+)\/(\d+)/g, '$3-$2-$1')
@@ -92,11 +86,11 @@ function ready(productItem, comments) {
         }
     }
     
-    
     for (element of productItem.relatedProducts){
         showRelated(element)
     }
 }
+
 const relatedSection = document.getElementById('relatedSection')
 function showRelated(relatedProd) {
     let relatedElement = document.createElement('div')
@@ -150,4 +144,12 @@ function addComment(element, commentsSection){
     let commentInfo = document.createElement('q')
     commentInfo.innerHTML = element.description
     comment.appendChild(commentInfo)
+}
+
+function adToCart (product){
+    let cart = JSON.parse(localStorage.getItem('cart'))
+    if(!cart.some((element) => element.id == product.id)){
+        cart.push(product)
+        localStorage.setItem('cart', JSON.stringify(cart))
+    }
 }

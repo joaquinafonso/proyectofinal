@@ -7,17 +7,24 @@ function loadCart (data){
     const articles = data.articles
 
     for(const element of articles){
-        const article = document.createElement('div')
-        article.classList = 'article'
-        article.innerHTML = `<img src='${element.image}'/> 
-        <p>${element.name}</p>
-        <p>${element.currency} ${element.unitCost}</p>
-        <input type='number' onchange="updateCount(this.value, ${element.unitCost}, ${element.id})" value=${element.count} min=1></input>
-        <p>${element.currency} <span id="${element.id}">${element.unitCost * element.count}<span></p>`
-
-        cart.appendChild(article)
+        addProduct(element)
+    }
+    for(const element of JSON.parse(localStorage.getItem('cart'))){
+        addProduct(element)
     }
 
+}
+
+function addProduct (element){
+    const article = document.createElement('div')
+    article.classList = 'article'
+    article.innerHTML = `<img src='${element.image}'/> 
+    <p onclick="localStorage.setItem('currentProduct', '${element.id}'); window.location = 'product-info.html'">${element.name}</p>
+    <p>${element.currency} ${element.unitCost}</p>
+    <input type='number' onchange="updateCount(this.value, ${element.unitCost}, ${element.id})" value=${element.count} min=1></input>
+    <p>${element.currency} <span id="${element.id}">${element.unitCost * element.count}<span></p>`
+
+    cart.appendChild(article)
 }
 
 function updateCount(count, cost, id){
