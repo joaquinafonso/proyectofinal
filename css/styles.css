@@ -271,6 +271,12 @@ a.custom-card:hover {
   border-radius: 10px;
 }
 
+.btn-primary{
+  border-radius: 40px;
+  border: none;
+  padding: 10px;
+}
+
 .btn-order-group{
   display: flex;
   flex-direction: row;
@@ -308,4 +314,17 @@ width:36px;
 *.night-mode *:is(.card, .comment, .list-group-item){
   background: #444;
   color: #fff;
+}
+
+label{
+  margin-bottom: 5px;
+}
+
+td{
+  padding-right: 10px;
+}
+
+
+input:disabled{
+  background-color: rgb(255, 228, 228);
 }

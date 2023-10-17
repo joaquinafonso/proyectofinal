@@ -85,10 +85,54 @@
       <input type="text" class="form-control" style="width:50%" id="streetAddress" value="" name="streetAddress">
       
       <label for="addressNumber">Número</label>
-      <input type="text" class="form-control" style="width:50%" id="addressNumber" value="" name="addressNumber">
+      <input type="number" class="form-control" style="width:50%" id="addressNumber" value="" name="addressNumber">
       
       <label for="addressDetail">Esquina</label>
       <input type="text" class="form-control" style="width:50%" id="addressDetail value=" name="addressDetail">
+    </div><br><br>
+    <h5><i class="fa-solid fa-credit-card"></i> Método de pago</h5>
+    <span id="paymentMethod">Seleccione el método de pago</span><button type="button" id="selectPaymentMethod" class="btn btn-primary" style="margin-left: 20px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-credit-card"></i> Método de pago</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="radio" id="paymentMethodCard" name="paymentMethod" value="">
+            <label for="paymentMethodCard">Tarjeta de crédito</label>
+            <hr>
+            <table>
+              <tr>
+                <td><label for="ccn">Número de tarjeta</label></td>
+                <td><label for="ccn">CCV</label></td>
+              </tr>
+              <tr>
+                <td><input id="ccn" type="tel" style="width:100%" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19"></td>
+                <td><input id="ccv" type="tel" style="width:30%" inputmode="numeric" maxlength="3"></td>
+              </tr>
+            </table><br>
+            <label for="ccn">Vencimiento (MM/AA)</label><br>
+            <input id="expirationDate" type="date" style="width:30%">
+            <br><br>
+            <input type="radio" id="paymentMethodTransfer" name="paymentMethod" value="">
+            <label for="paymentMethodTransfer">Trasferencia bancaria</label>
+            <hr>
+            <label for="transferAccNum">Número de cuenta</label><br>
+            <input id="transferAccNum" type="tel" maxlength="30" inputmode="numeric" style="width:30%">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="applyPaymentMethod">Aplicar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>      
     </div>
   </section>
   <hr />
