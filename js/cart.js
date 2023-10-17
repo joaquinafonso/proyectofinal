@@ -1,5 +1,15 @@
 const API_URL = CART_INFO_URL + '25801.json'
 const cart = document.getElementById('cart')
+const paymentMethodCard = document.getElementById('paymentMethodCard')
+const paymentMethodTransfer = document.getElementById('paymentMethodTransfer')
+const transferAccNum = document.getElementById('transferAccNum')
+const applyPaymentMethod = document.getElementById('applyPaymentMethod')
+let paymentMethodStatus = document.getElementById('paymentMethod')
+let selectPaymentMethod = document.getElementById('selectPaymentMethod')
+const ccn = document.getElementById('ccn')
+const ccv = document.getElementById('ccv')
+const expirationDate = document.getElementById('expirationDate')
+
 
 fetch(API_URL).then(res => res.json()).then(data => loadCart(data))
 
@@ -30,3 +40,31 @@ function addProduct (element){
 function updateCount(count, cost, id){
     document.getElementById(id).innerHTML = count * cost
 }
+
+applyPaymentMethod.addEventListener('click', function(){
+    selectPaymentMethod.innerHTML = 'Modificar'
+    if(paymentMethodCard.checked){
+        localStorage.setItem('paymentMethod','card')
+        paymentMethodStatus.innerHTML = 'Tarjeta de crédito'
+    }
+    if(paymentMethodTransfer.checked){
+        localStorage.setItem('paymentMethod','transfer')
+        paymentMethodStatus.innerHTML = 'Transferencia bancaria'
+    }
+    // localStorage.setItem('paymentMethod',)
+})
+
+paymentMethodCard.addEventListener('click', function(){
+    transferAccNum.disabled = true
+    ccn.disabled = false
+    ccv.disabled = false
+    expirationDate.disabled = false
+})
+
+paymentMethodTransfer.addEventListener('click', function(){
+    transferAccNum.disabled = false
+    ccn.disabled = true
+    ccv.disabled = true
+    expirationDate.disabled = true
+})
+
