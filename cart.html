@@ -63,6 +63,7 @@
         <hr />
       </div>
     </main>
+    <div class="invalid-feedback">Revisa las cantidades de los productos en el carrito.</div>
   </section>
   <section class="container">
     <h5><i class="fa-solid fa-truck"></i> Tipo de envío</h5>
@@ -77,21 +78,26 @@
       <input type="radio" id="standard" name="deliveryType" value="standard">
       <label for="standard">Standard 12 a 15 días (5%)</label>
     </div>
+    <p class="invalid-feedback" id='validationDelivery'> <i class="fa-solid fa-circle-info"></i> Debes seleccionar un tipo de envío</p>
     <br><br>
     <h5><i class="fa-solid fa-location-dot"></i> Dirección de envío</h5>
     <hr />
     <div>
       <label for="streetAddress">Calle</label>
-      <input type="text" class="form-control" style="width:50%" id="streetAddress" value="" name="streetAddress">
+      <input type="text" class="form-control" style="width:50%" id="streetAddress" value="" name="streetAddress" required>
+      <div class="invalid-feedback">Debes ingresar una calle.</div>
       
       <label for="addressNumber">Número</label>
-      <input type="number" class="form-control" style="width:50%" id="addressNumber" value="" name="addressNumber">
+      <input type="text" class="form-control" style="width:50%" id="addressNumber" value="" name="addressNumber" required>
+      <div class="invalid-feedback">Debes ingresar un número.</div>
       
       <label for="addressDetail">Esquina</label>
-      <input type="text" class="form-control" style="width:50%" id="addressDetail value=" name="addressDetail">
+      <input type="text" class="form-control" style="width:50%" id="addressDetail" value="" name="addressDetail" required>
+      <div class="invalid-feedback">Debes ingresar una esquina</div>
     </div><br><br>
     <h5><i class="fa-solid fa-credit-card"></i> Método de pago</h5>
-    <span id="paymentMethod">Seleccione el método de pago</span><button type="button" id="selectPaymentMethod" class="btn btn-primary" style="margin-left: 20px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar</button>
+    <button type="button" id="selectPaymentMethod" class="btn btn-warning" style="margin-left: 20px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar</button>
+    <p class="invalid-feedback" id='paymentFeedback'> <i class="fa-solid fa-circle-info"></i> Debes seleccionar un método de pago</p>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -131,6 +137,8 @@
         </div>
       </div>
     </div>
+    <hr><br>
+    <button type="button" class="btn btn-primary" id="buyBtn">Finalizar compra</button>
 
     <div>      
     </div>
