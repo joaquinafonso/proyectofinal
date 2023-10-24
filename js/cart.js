@@ -9,20 +9,39 @@ let selectPaymentMethod = document.getElementById('selectPaymentMethod')
 const ccn = document.getElementById('ccn')
 const ccv = document.getElementById('ccv')
 const expirationDate = document.getElementById('expirationDate')
+const exchangeValue = EXCHANGE_URL
+const unitCost = document.getElementById('unit-cost')
+const shippingCost = document.getElementById('shipping-cost')
 
+Promise.all([
+    fetch(API_URL).then(res => res.json()), 
+    fetch(EXCHANGE_URL).then(res => res.json())])
+.then(data => loadCart(...data))
 
-fetch(API_URL).then(res => res.json()).then(data => loadCart(data))
-
-function loadCart (data){
+function loadCart (data, exchange){
+    const currency_conversion = exchange.data.UYU.value
     const articles = data.articles
+    let totalCost = 0;
 
     for(const element of articles){
         addProduct(element)
+        let cost = element.unitCost
+        if(element.currency == 'UYU'){
+            cost /= currency_conversion
+        }
+        console.log(cost)
+        totalCost += cost;
     }
     for(const element of JSON.parse(localStorage.getItem('cart'))){
         addProduct(element)
+        let cost = element.unitCost
+        if(element.currency == 'UYU'){
+            cost /= currency_conversion
+        }
+        console.log(cost)
+        totalCost += cost;
     }
-
+    unitCost.innerHTML= Math.round(totalCost) + 'USD'
 }
 
 function addProduct (element){

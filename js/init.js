@@ -6,6 +6,8 @@ const PRODUCT_INFO_COMMENTS_URL = "https://japceibal.github.io/emercado-api/prod
 const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
+const EXCHANGE_URL = 'https://api.currencyapi.com/v3/latest?apikey=cur_live_G1hg4V0SOKVSqW05rQDCmxSZAjWLo8IjLkbdg7vS&currencies=UYU'
+
 let register = JSON.parse(localStorage.getItem('register'));
 
 
