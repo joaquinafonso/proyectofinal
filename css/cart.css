@@ -19,3 +19,11 @@
     font-weight: bold;
     
 }
+
+#endShopping {
+    background-color: #0087F7;       
+    border: none;                
+    color: white;                
+    padding: 10px 400px;          
+    border-radius: 0; 
+}
