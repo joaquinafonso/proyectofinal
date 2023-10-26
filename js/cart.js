@@ -9,7 +9,6 @@ let selectPaymentMethod = document.getElementById('selectPaymentMethod')
 const ccn = document.getElementById('ccn')
 const ccv = document.getElementById('ccv')
 const expirationDate = document.getElementById('expirationDate')
-const exchangeValue = EXCHANGE_URL
 const unitCost = document.getElementById('unit-cost')
 const shippingCost = document.getElementById('shipping-cost')
 const totalCost = document.getElementById('total-cost')
