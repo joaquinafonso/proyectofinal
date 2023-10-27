@@ -67,11 +67,11 @@
   <section class="container">
     <h5><i class="fa-solid fa-truck"></i> Tipo de envío</h5>
     <hr />
-    <div class="container">
+    <div class="container" id="shippingType">
       <input type="radio" id="premium" name="deliveryType" value="premium">
       <label for="premium">Premium 2 a 5 dias (15%)</label><br>
     
-      <input type="radio" id="express" name="deliveryType" value="express">
+      <input checked type="radio" id="express" name="deliveryType" value="express">
       <label for="express">Express 5 a 8 días (7%)</label> <i class="fa-solid fa-bolt"></i><br>
     
       <input type="radio" id="standard" name="deliveryType" value="standard">
@@ -90,6 +90,50 @@
       <label for="addressDetail">Esquina</label>
       <input type="text" class="form-control" style="width:50%" id="addressDetail value=" name="addressDetail">
     </div><br><br>
+    
+    <h5>Costos</h5>
+    <hr />
+    <div class="costContainer">
+      <div class="d-flex justify-content-between costOptionContainer">
+        <section>
+          <h6>Subtotal</h6>
+          <em>Costo unitario del producto por unidad</em>
+        </section>
+        <h4>USD <span id="unit-cost"></span></h4>
+      </div>
+      <div class="d-flex justify-content-between costOptionContainer">
+        <section>
+          <h6>Costo de envío</h6>
+          <em>Según el tipo de envío</em>
+        </section>
+        <h4>USD <span id="shipping-cost"></span></h4>
+      </div>
+      <div class="d-flex justify-content-between costOptionContainer">
+        <section>
+          <h6>Total($)</h6>
+        </section>
+        <h4>USD <span id="total-cost"></span></h4>
+      </div>
+    </div>
+      
+     
+
+    <br><br>
+
+   
+    
+
+    
+
+
+
+
+
+
+
+
+
+    
     <h5><i class="fa-solid fa-credit-card"></i> Método de pago</h5>
     <span id="paymentMethod">Seleccione el método de pago</span><button type="button" id="selectPaymentMethod" class="btn btn-primary" style="margin-left: 20px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar</button>
 
