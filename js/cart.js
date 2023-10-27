@@ -12,15 +12,15 @@ const expirationDate = document.getElementById('expirationDate')
 const exchangeValue = EXCHANGE_URL
 const unitCost = document.getElementById('unit-cost')
 const shippingCost = document.getElementById('shipping-cost')
+const totalCost = document.getElementById('total-cost')
 
-Promise.all([
-    fetch(API_URL).then(res => res.json()), 
-    fetch(EXCHANGE_URL).then(res => res.json())])
-.then(data => loadCart(...data))
 
-function loadCart (data, exchange){
-    const currency_conversion = exchange.data.UYU.value
+fetch(API_URL).then(res => res.json()).then(data => loadCart(data))
+
+function loadCart (data){
+    const currency_conversion = 40
     const articles = data.articles
+
     let totalCost = 0;
 
     for(const element of articles){
@@ -29,7 +29,6 @@ function loadCart (data, exchange){
         if(element.currency == 'UYU'){
             cost /= currency_conversion
         }
-        console.log(cost)
         totalCost += cost;
     }
     for(const element of JSON.parse(localStorage.getItem('cart'))){
@@ -38,11 +37,63 @@ function loadCart (data, exchange){
         if(element.currency == 'UYU'){
             cost /= currency_conversion
         }
-        console.log(cost)
         totalCost += cost;
     }
-    unitCost.innerHTML= Math.round(totalCost) + 'USD'
+    unitCost.innerHTML= Math.round(totalCost)
+    updateShippingCost()
 }
+
+
+document.getElementById('standard').addEventListener('click',function(){
+    resultStandard = (unitCost.innerHTML*5)/100
+    shippingCost.innerHTML = Math.round(resultStandard)
+    totalCost.innerHTML = Number(unitCost.innerHTML) +  Number(Math.round(resultStandard))
+}) 
+
+document.getElementById('express').addEventListener('click',function(){
+    resultExpress = (unitCost.innerHTML*7)/100
+    shippingCost.innerHTML = Math.round(resultExpress)
+    totalCost.innerHTML = unitCost.innerHTML +  Math.round(resultExpress)
+})
+        
+document.getElementById('premium').addEventListener('click',function(){
+    resultPremium = (unitCost.innerHTML*15)/100
+    shippingCost.innerHTML = Math.round(resultPremium)
+    totalCost.innerHTML = unitCost.innerHTML + Math.round(resultPremium)
+
+})
+   
+
+
+
+
+
+/*
+shippingType.addEventListener('input', updateShippingCost)
+function updateShippingCost(){
+    const shippingOptions = shippingType.getElementsByTagName('input')
+    const selectedOption = Array.from(shippingOptions).filter((el => el.checked))
+
+    let shippingValue = 0;
+    switch(selectedOption[0].defaultValue){
+        case 'standard':
+            shippingValue = 0.05;
+            break;
+        case 'express':
+            shippingValue = 0.07;
+            break;
+        case 'premium':
+            shippingValue = 0.15;
+            break;
+    }
+    shippingValue *= unitCost.innerHTML
+    shippingCost.innerHTML= Math.round(shippingValue)
+}
+*/
+
+
+
+
 
 function addProduct (element){
     const article = document.createElement('div')
@@ -87,3 +138,32 @@ paymentMethodTransfer.addEventListener('click', function(){
     expirationDate.disabled = true
 })
 
+// const total = document.getElementById('total');
+
+//   // Función para calcular y actualizar los valores
+// function calcTotal() {
+//     // Obtiene el costo unitario del producto (puedes obtenerlo de tu carrito)
+// const unitCostElement = 100.00; 
+
+//     // Obtiene el costo de envío según el tipo de envío seleccionado
+// const shippingType = 'normal'; 
+// let shippingCost = 0.00;
+
+// if (shippingType === 'normal') {
+//     shippingCost = unitCostElement * 0.05; 
+// } else if (shippingType === 'express') {
+//     shippingCost = unitCostElement * 0.07; 
+// } else if (shippingType === 'premium') {
+//     shippingCost = unitCostElement * 0.15; 
+// }
+
+//     // Calcula el subtotal general
+// const subtotalGeneral = unitCostElement + shippingCost;
+
+//     // Actualiza los elementos en la página
+// unitCost.textContent = `$${unitCostElement.toFixed(2)}`;
+// shippingCostElement.textContent = `$${shippingCost.toFixed(2)}`;
+// total.textContent = `$${subtotalGeneral.toFixed(2)}`;
+// }
+
+// calcTotal();
