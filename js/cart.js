@@ -9,7 +9,6 @@ let selectPaymentMethod = document.getElementById('selectPaymentMethod')
 const ccn = document.getElementById('ccn')
 const ccv = document.getElementById('ccv')
 const expirationDate = document.getElementById('expirationDate')
-const exchangeValue = EXCHANGE_URL
 const unitCost = document.getElementById('unit-cost')
 const shippingCost = document.getElementById('shipping-cost')
 const totalCost = document.getElementById('total-cost')
@@ -40,21 +39,22 @@ function loadCart (data){
         totalCost += cost;
     }
     unitCost.innerHTML= Math.round(totalCost)
-    updateShippingCost()
+    expressShipping()
 }
 
 
-document.getElementById('standard').addEventListener('click',function(){
+document.getElementById('standard').addEventListener('click', function(){
     resultStandard = (unitCost.innerHTML*5)/100
     shippingCost.innerHTML = Math.round(resultStandard)
     totalCost.innerHTML = Number(unitCost.innerHTML) +  Number(Math.round(resultStandard))
-}) 
+})
 
-document.getElementById('express').addEventListener('click',function(){
+document.getElementById('express').addEventListener('click', expressShipping)
+function expressShipping(){
     resultExpress = (unitCost.innerHTML*7)/100
     shippingCost.innerHTML = Math.round(resultExpress)
     totalCost.innerHTML = Number(unitCost.innerHTML) +  Number(Math.round(resultExpress))
-})
+}
         
 document.getElementById('premium').addEventListener('click',function(){
     resultPremium = (unitCost.innerHTML*15)/100
@@ -63,15 +63,6 @@ document.getElementById('premium').addEventListener('click',function(){
 
 })
    
-
-
-
-
-
-
-
-
-
 
 function addProduct (element){
     const article = document.createElement('div')
