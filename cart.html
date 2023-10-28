@@ -63,6 +63,7 @@
         
       </div>
     </main>
+    <div class="invalid-feedback">Revisa las cantidades de los productos en el carrito.</div>
   </section>
   <section class="container">
     <h5><i class="fa-solid fa-truck"></i> Tipo de envío</h5>
@@ -77,6 +78,7 @@
       <input type="radio" id="standard" name="deliveryType" value="standard">
       <label for="standard">Standard 12 a 15 días (5%)</label>
     </div>
+    <p class="invalid-feedback" id='validationDelivery'> <i class="fa-solid fa-circle-info"></i> Debes seleccionar un tipo de envío</p>
     <br><br>
     <h5><i class="fa-solid fa-location-dot"></i> Dirección de envío</h5>
     <hr />
@@ -109,7 +111,6 @@
           </div>
         </div>
       </form>
-
     </div><br><br>
 
     <h5>Costos</h5>
@@ -136,6 +137,7 @@
     </div>
     <br><br>
     <h5><i class="fa-solid fa-credit-card"></i> Método de pago</h5>
+
     <span id="paymentMethod">Seleccione el método de pago</span>
     <button type="button" id="selectPaymentMethod" class="btn btn-primary" style="margin-left: 20px;" data-bs-toggle="modal" data-bs-target="#payment-method">Seleccionar</button>
 
@@ -186,6 +188,7 @@
         </div>
       </div>
     </div>
+
     <div class="invalid-feedback" id="modal-feedback">
       Por favor, ingrese un método de pago válido.
     </div>
