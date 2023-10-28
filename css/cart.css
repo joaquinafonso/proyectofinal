@@ -27,6 +27,22 @@
     font-weight: bold;   
 }
 
+.costContainer{
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .costOptionContainer{
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    border: solid 1px #CED4DA;
+  }
+.costOptionContainer h6{
+    font-size: 1.25rem;
+}
+.costOptionContainer h5 {
+    font-size: 1.5rem;
+}
 #endShopping {
     background-color: #0087F7;       
     border: none;                

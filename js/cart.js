@@ -22,7 +22,6 @@ fetch(API_URL).then(res => res.json()).then(element => {
 
 function loadCart (data){
     const currency_conversion = 40
-    
     let totalCost = 0;
 
     if(data.length == 0){
@@ -120,7 +119,6 @@ applyPaymentMethod.addEventListener('click', function(){
         localStorage.setItem('paymentMethod','transfer')
         paymentMethodStatus.innerHTML = 'Transferencia bancaria'
     }
-    // localStorage.setItem('paymentMethod',)
 })
 
 paymentMethodCard.addEventListener('click', function(){
@@ -137,28 +135,28 @@ paymentMethodTransfer.addEventListener('click', function(){
     expirationDate.disabled = true
 })
 
-    // Validación del formulario
-    $(document).ready(function() {
-        $('#pedido-form').submit(function(e) {
-            if (!$('#calle').val() || !$('#numero').val() || !$('#esquina').val()) {
-                alert("Los campos de dirección no pueden estar vacíos.");
-                e.preventDefault();
-            }
-            if ($('#forma-envio').val() === "") {
-                alert("Debes seleccionar una forma de envío.");
-                e.preventDefault();
-            }
-            if ($('#cantidad-articulo').val() <= 0) {
-                alert("La cantidad del artículo debe ser mayor a 0.");
-                e.preventDefault();
-            }
-            if ($('#forma-pago').val() === "") {
-                alert("Debes seleccionar una forma de pago.");
-                e.preventDefault();
-            }
-            if ($('#forma-pago').val() === "tarjeta-credito" && !$('#detalle-pago').val()) {
-                alert("El detalle de pago no puede estar vacío.");
-                e.preventDefault();
-            }
-        });
+// Validación del formulario
+$(document).ready(function() {
+    $('#pedido-form').submit(function(e) {
+        if (!$('#calle').val() || !$('#numero').val() || !$('#esquina').val()) {
+            alert("Los campos de dirección no pueden estar vacíos.");
+            e.preventDefault();
+        }
+        if ($('#forma-envio').val() === "") {
+            alert("Debes seleccionar una forma de envío.");
+            e.preventDefault();
+        }
+        if ($('#cantidad-articulo').val() <= 0) {
+            alert("La cantidad del artículo debe ser mayor a 0.");
+            e.preventDefault();
+        }
+        if ($('#forma-pago').val() === "") {
+            alert("Debes seleccionar una forma de pago.");
+            e.preventDefault();
+        }
+        if ($('#forma-pago').val() === "tarjeta-credito" && !$('#detalle-pago').val()) {
+            alert("El detalle de pago no puede estar vacío.");
+            e.preventDefault();
+        }
     });
+});
