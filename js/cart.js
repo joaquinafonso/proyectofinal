@@ -21,7 +21,6 @@ function loadCart (data){
     const articles = data.articles
     
     let totalCost = 0;
-
     // for(const element of articles){
     //     addProduct(element)
     //     let cost = element.unitCost
@@ -52,33 +51,31 @@ function loadCart (data){
         }
     }
     unitCost.innerHTML= Math.round(totalCost)
-    updateShippingCost()
+    expressShipping()
 }
 
 
+document.getElementById('standard').addEventListener('click', function(){
+    resultStandard = (unitCost.innerHTML*5)/100
+    shippingCost.innerHTML = Math.round(resultStandard)
+    totalCost.innerHTML = Number(unitCost.innerHTML) +  Number(Math.round(resultStandard))
+})
 
+document.getElementById('express').addEventListener('click', expressShipping)
+function expressShipping(){
+    resultExpress = (unitCost.innerHTML*7)/100
+    shippingCost.innerHTML = Math.round(resultExpress)
+    totalCost.innerHTML = Number(unitCost.innerHTML) +  Number(Math.round(resultExpress))
 
-shippingType.addEventListener('input', updateShippingCost)
-function updateShippingCost(){
-    const shippingOptions = shippingType.getElementsByTagName('input')
-    const selectedOption = Array.from(shippingOptions).filter((el => el.checked))
-
-    let shippingValue = 0;
-    switch(selectedOption[0].defaultValue){
-        case 'standard':
-            shippingValue = 0.05;
-            break;
-        case 'express':
-            shippingValue = 0.07;
-            break;
-        case 'premium':
-            shippingValue = 0.15;
-            break;
-    }
-    shippingValue *= unitCost.innerHTML
-    shippingCost.innerHTML = Math.round(shippingValue)
-    totalCost.innerHTML = Number(shippingCost.innerHTML) + Number(unitCost.innerHTML)
 }
+        
+document.getElementById('premium').addEventListener('click',function(){
+    resultPremium = (unitCost.innerHTML*15)/100
+    shippingCost.innerHTML = Math.round(resultPremium)
+    totalCost.innerHTML = Number(unitCost.innerHTML) + Number(Math.round(resultPremium))
+
+})
+   
 
 
 function addProduct (element){
