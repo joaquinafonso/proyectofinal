@@ -10,15 +10,6 @@ const ccn = document.getElementById('ccn')
 const ccv = document.getElementById('ccv')
 const expirationDate = document.getElementById('expirationDate')
 
-let paymentFeedback = document.getElementById('paymentFeedback')
-const buyBtn = document.getElementById('buyBtn')
-let streetAddress = document.getElementById('streetAddress')
-let addressNumber = document.getElementById('addressNumber')
-let addressDetail = document.getElementById('addressDetail')
-const premium = document.getElementById('premium')
-const express = document.getElementById('express')
-const standard = document.getElementById('standard')
-
 const unitCost = document.getElementById('unit-cost')
 const shippingCost = document.getElementById('shipping-cost')
 const totalCost = document.getElementById('total-cost')
@@ -33,12 +24,12 @@ succesfulyPurchase.style.display = 'none'
 
 
 fetch(API_URL).then(res => res.json()).then(element => {
-    let data = JSON.parse(localStorage.getItem('cart'))
+    let data = JSON.parse(localStorage.getItem('cart')).filter(el => el.id != element.articles[0].id)
     data.unshift(...element.articles)
-    localStorage.setItem('cart', JSON.stringify(data))
     loadCart(data)})
 
 function loadCart (data){
+    localStorage.setItem('cart', JSON.stringify(data))
     const currency_conversion = 40
     let totalCost = 0;
 
