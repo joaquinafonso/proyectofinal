@@ -14,23 +14,18 @@ const shippingCost = document.getElementById('shipping-cost')
 const totalCost = document.getElementById('total-cost')
 
 
-fetch(API_URL).then(res => res.json()).then(data => loadCart(data))
+fetch(API_URL).then(res => res.json()).then(element => {
+    let data = JSON.parse(localStorage.getItem('cart'))
+    data.unshift(...element.articles)
+    console.log(data)
+    loadCart(data)})
 
 function loadCart (data){
     const currency_conversion = 40
-    const articles = data.articles
     
     let totalCost = 0;
-    // for(const element of articles){
-    //     addProduct(element)
-    //     let cost = element.unitCost
-    //     if(element.currency == 'UYU'){
-    //         cost /= currency_conversion
-    //     }
-    //     totalCost += cost;
-    // }
-    const cartProducts = JSON.parse(localStorage.getItem('cart'))
-    if(cartProducts.length == 0){
+
+    if(data.length == 0){
         cart.innerHTML="<h3 class='danger'>No hay artículos en su carrito</h3>"
     }else{
         cart.innerHTML=`<div class="article article-title">
@@ -41,13 +36,14 @@ function loadCart (data){
         <p>Subtotal</p>
       </div>
       <hr />`
-        for(const element of cartProducts){
+        for(const element of data){
             addProduct(element)
             let cost = element.unitCost
             if(element.currency == 'UYU'){
                 cost /= currency_conversion
             }
-            totalCost += cost;
+            console.log(element.count, cost, cost * element.count)
+            totalCost += cost * Number(element.count);
         }
     }
     unitCost.innerHTML= Math.round(totalCost)
@@ -97,13 +93,21 @@ function addProduct (element){
 
 function removeProduct(id){
     const element = JSON.parse(localStorage.getItem('cart'))
-    .filter(element => element.id != id)
+        .filter(element => element.id != id)
     localStorage.setItem('cart', JSON.stringify(element))
     loadCart(element)
 }
 
 function updateCount(count, cost, id){
     document.getElementById(id).innerHTML = count * cost
+    let elements = JSON.parse(localStorage.getItem('cart'))
+    elements.forEach(element => {
+        if(element.id == id){
+            element.count = count
+        }
+    });
+    console.log(elements)
+    loadCart(elements)
 }
 
 applyPaymentMethod.addEventListener('click', function(){
