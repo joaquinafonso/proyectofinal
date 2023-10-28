@@ -68,28 +68,6 @@ document.getElementById('premium').addEventListener('click',function(){
 
 
 
-/*
-shippingType.addEventListener('input', updateShippingCost)
-function updateShippingCost(){
-    const shippingOptions = shippingType.getElementsByTagName('input')
-    const selectedOption = Array.from(shippingOptions).filter((el => el.checked))
-
-    let shippingValue = 0;
-    switch(selectedOption[0].defaultValue){
-        case 'standard':
-            shippingValue = 0.05;
-            break;
-        case 'express':
-            shippingValue = 0.07;
-            break;
-        case 'premium':
-            shippingValue = 0.15;
-            break;
-    }
-    shippingValue *= unitCost.innerHTML
-    shippingCost.innerHTML= Math.round(shippingValue)
-}
-*/
 
 
 
