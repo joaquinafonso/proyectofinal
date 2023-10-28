@@ -53,13 +53,13 @@ document.getElementById('standard').addEventListener('click',function(){
 document.getElementById('express').addEventListener('click',function(){
     resultExpress = (unitCost.innerHTML*7)/100
     shippingCost.innerHTML = Math.round(resultExpress)
-    totalCost.innerHTML = unitCost.innerHTML +  Math.round(resultExpress)
+    totalCost.innerHTML = Number(unitCost.innerHTML) +  Number(Math.round(resultExpress))
 })
         
 document.getElementById('premium').addEventListener('click',function(){
     resultPremium = (unitCost.innerHTML*15)/100
     shippingCost.innerHTML = Math.round(resultPremium)
-    totalCost.innerHTML = unitCost.innerHTML + Math.round(resultPremium)
+    totalCost.innerHTML = Number(unitCost.innerHTML) + Number(Math.round(resultPremium))
 
 })
    
