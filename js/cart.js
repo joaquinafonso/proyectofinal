@@ -19,24 +19,36 @@ fetch(API_URL).then(res => res.json()).then(data => loadCart(data))
 function loadCart (data){
     const currency_conversion = 40
     const articles = data.articles
-
+    
     let totalCost = 0;
-
-    for(const element of articles){
-        addProduct(element)
-        let cost = element.unitCost
-        if(element.currency == 'UYU'){
-            cost /= currency_conversion
+    // for(const element of articles){
+    //     addProduct(element)
+    //     let cost = element.unitCost
+    //     if(element.currency == 'UYU'){
+    //         cost /= currency_conversion
+    //     }
+    //     totalCost += cost;
+    // }
+    const cartProducts = JSON.parse(localStorage.getItem('cart'))
+    if(cartProducts.length == 0){
+        cart.innerHTML="<h3 class='danger'>No hay artículos en su carrito</h3>"
+    }else{
+        cart.innerHTML=`<div class="article article-title">
+        <span></span>
+        <p>Nombre</p>
+        <p>Costo</p>
+        <p>Cantidad</p>
+        <p>Subtotal</p>
+      </div>
+      <hr />`
+        for(const element of cartProducts){
+            addProduct(element)
+            let cost = element.unitCost
+            if(element.currency == 'UYU'){
+                cost /= currency_conversion
+            }
+            totalCost += cost;
         }
-        totalCost += cost;
-    }
-    for(const element of JSON.parse(localStorage.getItem('cart'))){
-        addProduct(element)
-        let cost = element.unitCost
-        if(element.currency == 'UYU'){
-            cost /= currency_conversion
-        }
-        totalCost += cost;
     }
     unitCost.innerHTML= Math.round(totalCost)
     expressShipping()
@@ -54,6 +66,7 @@ function expressShipping(){
     resultExpress = (unitCost.innerHTML*7)/100
     shippingCost.innerHTML = Math.round(resultExpress)
     totalCost.innerHTML = Number(unitCost.innerHTML) +  Number(Math.round(resultExpress))
+
 }
         
 document.getElementById('premium').addEventListener('click',function(){
@@ -64,16 +77,29 @@ document.getElementById('premium').addEventListener('click',function(){
 })
    
 
+
 function addProduct (element){
     const article = document.createElement('div')
+    let unitCost = element.unitCost
+    if(element.currency == 'UYU'){
+        unitCost = Math.round(unitCost / 40);
+    }
     article.classList = 'article'
     article.innerHTML = `<img src='${element.image}'/> 
     <p onclick="localStorage.setItem('currentProduct', '${element.id}'); window.location = 'product-info.html'">${element.name}</p>
-    <p>${element.currency} ${element.unitCost}</p>
+    <p>USD ${unitCost}</p>
     <input type='number' onchange="updateCount(this.value, ${element.unitCost}, ${element.id})" value=${element.count} min=1></input>
-    <p>${element.currency} <span id="${element.id}">${element.unitCost * element.count}<span></p>`
+    <p>USD <span id="${element.id}">${unitCost * element.count}<span></p>
+    <button onclick=removeProduct(${element.id}) class="btn border-danger"><i class="fa-solid fa-trash-can" style="color: #ff0000;"></i></button>`
 
     cart.appendChild(article)
+}
+
+function removeProduct(id){
+    const element = JSON.parse(localStorage.getItem('cart'))
+    .filter(element => element.id != id)
+    localStorage.setItem('cart', JSON.stringify(element))
+    loadCart(element)
 }
 
 function updateCount(count, cost, id){
@@ -106,33 +132,3 @@ paymentMethodTransfer.addEventListener('click', function(){
     ccv.disabled = true
     expirationDate.disabled = true
 })
-
-// const total = document.getElementById('total');
-
-//   // Función para calcular y actualizar los valores
-// function calcTotal() {
-//     // Obtiene el costo unitario del producto (puedes obtenerlo de tu carrito)
-// const unitCostElement = 100.00; 
-
-//     // Obtiene el costo de envío según el tipo de envío seleccionado
-// const shippingType = 'normal'; 
-// let shippingCost = 0.00;
-
-// if (shippingType === 'normal') {
-//     shippingCost = unitCostElement * 0.05; 
-// } else if (shippingType === 'express') {
-//     shippingCost = unitCostElement * 0.07; 
-// } else if (shippingType === 'premium') {
-//     shippingCost = unitCostElement * 0.15; 
-// }
-
-//     // Calcula el subtotal general
-// const subtotalGeneral = unitCostElement + shippingCost;
-
-//     // Actualiza los elementos en la página
-// unitCost.textContent = `$${unitCostElement.toFixed(2)}`;
-// shippingCostElement.textContent = `$${shippingCost.toFixed(2)}`;
-// total.textContent = `$${subtotalGeneral.toFixed(2)}`;
-// }
-
-// calcTotal();
