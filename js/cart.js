@@ -136,3 +136,29 @@ paymentMethodTransfer.addEventListener('click', function(){
     ccv.disabled = true
     expirationDate.disabled = true
 })
+
+    // Validación del formulario
+    $(document).ready(function() {
+        $('#pedido-form').submit(function(e) {
+            if (!$('#calle').val() || !$('#numero').val() || !$('#esquina').val()) {
+                alert("Los campos de dirección no pueden estar vacíos.");
+                e.preventDefault();
+            }
+            if ($('#forma-envio').val() === "") {
+                alert("Debes seleccionar una forma de envío.");
+                e.preventDefault();
+            }
+            if ($('#cantidad-articulo').val() <= 0) {
+                alert("La cantidad del artículo debe ser mayor a 0.");
+                e.preventDefault();
+            }
+            if ($('#forma-pago').val() === "") {
+                alert("Debes seleccionar una forma de pago.");
+                e.preventDefault();
+            }
+            if ($('#forma-pago').val() === "tarjeta-credito" && !$('#detalle-pago').val()) {
+                alert("El detalle de pago no puede estar vacío.");
+                e.preventDefault();
+            }
+        });
+    });
