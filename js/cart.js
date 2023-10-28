@@ -12,12 +12,19 @@ const expirationDate = document.getElementById('expirationDate')
 const unitCost = document.getElementById('unit-cost')
 const shippingCost = document.getElementById('shipping-cost')
 const totalCost = document.getElementById('total-cost')
+const endShopping = document.getElementById('endShopping')
+const streetAddress = document.getElementById('streetAddress')
+const adressForm = document.getElementById('adressForm')
+const cardForm = document.getElementById('card-form')
+const transferForm = document.getElementById('transfer-form')
+const succesfulyPurchase = document.getElementById('succesfuly-purchase')
 
+succesfulyPurchase.style.display = 'none'
 
 fetch(API_URL).then(res => res.json()).then(element => {
     let data = JSON.parse(localStorage.getItem('cart'))
     data.unshift(...element.articles)
-    console.log(data)
+    localStorage.setItem('cart', JSON.stringify(data))
     loadCart(data)})
 
 function loadCart (data){
@@ -41,7 +48,6 @@ function loadCart (data){
             if(element.currency == 'UYU'){
                 cost /= currency_conversion
             }
-            console.log(element.count, cost, cost * element.count)
             totalCost += cost * Number(element.count);
         }
     }
@@ -79,6 +85,9 @@ function addProduct (element){
     if(element.currency == 'UYU'){
         unitCost = Math.round(unitCost / 40);
     }
+    if(element.count < 1){
+        element.count = 1
+    }
     article.classList = 'article'
     article.innerHTML = `<img src='${element.image}'/> 
     <p onclick="localStorage.setItem('currentProduct', '${element.id}'); window.location = 'product-info.html'">${element.name}</p>
@@ -105,7 +114,6 @@ function updateCount(count, cost, id){
             element.count = count
         }
     });
-    console.log(elements)
     loadCart(elements)
 }
 
@@ -135,28 +143,37 @@ paymentMethodTransfer.addEventListener('click', function(){
     expirationDate.disabled = true
 })
 
-// Validación del formulario
-$(document).ready(function() {
-    $('#pedido-form').submit(function(e) {
-        if (!$('#calle').val() || !$('#numero').val() || !$('#esquina').val()) {
-            alert("Los campos de dirección no pueden estar vacíos.");
-            e.preventDefault();
+
+adressForm.addEventListener('submit', adressSubmit)
+function adressSubmit (event){
+    event.preventDefault()
+    event.stopPropagation()
+
+    if(!cardForm.checkValidity() && localStorage.getItem('paymentMethod') == 'card'){
+        let cardFormValues = Array.from(cardForm.getElementsByTagName('input'))
+        for(input of cardFormValues){
+            if(!input.validity.valid){
+                paymentMethodStatus.classList.add("is-invalid")
+            }
+        }    
+    }else if(!transferForm.checkValidity() && localStorage.getItem('paymentMethod') == 'transfer'){
+        let transferFormValues = Array.from(transferForm.getElementsByTagName('input'))
+        for(input of transferFormValues){
+            if(!input.validity.valid){
+                paymentMethodStatus.classList.add("is-invalid")
+            }
         }
-        if ($('#forma-envio').val() === "") {
-            alert("Debes seleccionar una forma de envío.");
-            e.preventDefault();
+    }else{
+        if(adressForm.checkValidity()){
+            succesfulyPurchase.style.display = 'block'
+            localStorage.setItem('cart', '[]')
+            loadCart([])
+            setTimeout(()=>{succesfulyPurchase.style.display = 'none'}, 5000)
         }
-        if ($('#cantidad-articulo').val() <= 0) {
-            alert("La cantidad del artículo debe ser mayor a 0.");
-            e.preventDefault();
-        }
-        if ($('#forma-pago').val() === "") {
-            alert("Debes seleccionar una forma de pago.");
-            e.preventDefault();
-        }
-        if ($('#forma-pago').val() === "tarjeta-credito" && !$('#detalle-pago').val()) {
-            alert("El detalle de pago no puede estar vacío.");
-            e.preventDefault();
-        }
-    });
-});
+        paymentMethodStatus.classList.remove("is-invalid")
+    }
+    transferForm.classList.add('was-validated')
+    cardForm.classList.add('was-validated')
+    adressForm.classList.add('was-validated')
+
+}

@@ -49,6 +49,13 @@
       </div>
     </div>
   </nav>
+
+  <section id="alertas">
+    <div class="alert alert-success text-center" role="alert" id="succesfuly-purchase">
+      <h4 class="alert-heading">La compra ha sido realizada con éxito</h4>
+    </div>
+  </section>
+
   <section class="container" style="padding-top: 50px;">
     <h5><i class="fa-solid fa-bag-shopping"></i> Artículos a comprar</h5>
     <main>
@@ -73,17 +80,38 @@
     <br><br>
     <h5><i class="fa-solid fa-location-dot"></i> Dirección de envío</h5>
     <hr />
-    <div>
-      <label for="streetAddress">Calle</label>
-      <input type="text" class="form-control" style="width:50%" id="streetAddress" value="" name="streetAddress">
-      
-      <label for="addressNumber">Número</label>
-      <input type="number" class="form-control" style="width:50%" id="addressNumber" value="" name="addressNumber">
-      
-      <label for="addressDetail">Esquina</label>
-      <input type="text" class="form-control" style="width:50%" id="addressDetail value=" name="addressDetail">
+    <div >
+
+      <form class="needs-validation" id="adressForm" novalidate>
+
+        <div class="input-group has-validation d-block">
+          <label for="streetAddress" class="form-label">Calle</label>
+          <input required pattern="\S+.*" type="text" class="form-control w-50" id="streetAddress" aria-describedby="street-feedback">
+          <div class="invalid-feedback" id="street-feedback">
+            Por favor, ingrese el nombre de su calle.
+          </div>
+        </div>
+
+
+        <div class="input-group has-validation d-block">
+          <label for="addressNumber" class="form-label">Número</label>
+          <input required type="number" class="form-control w-50" id="addressNumber" aria-describedby="number-feedback">
+          <div class="invalid-feedback" id="number-feedback">
+            Por favor, ingrese un número válido.
+          </div>
+        </div>
+
+        <div class="input-group has-validation d-block">
+          <label for="addressDetail" class="form-label">Esquina</label>
+          <input required pattern="\S+.*" type="text" class="form-control w-50" id="addressDetail" aria-describedby="square-feedback">
+          <div class="invalid-feedback" id="square-feedback">
+            Por favor, ingrese el nombre de su esquina.
+          </div>
+        </div>
+      </form>
+
     </div><br><br>
-    
+
     <h5>Costos</h5>
     <hr />
     <div class="costContainer">
@@ -108,39 +136,49 @@
     </div>
     <br><br>
     <h5><i class="fa-solid fa-credit-card"></i> Método de pago</h5>
-    <span id="paymentMethod">Seleccione el método de pago</span><button type="button" id="selectPaymentMethod" class="btn btn-primary" style="margin-left: 20px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar</button>
+    <span id="paymentMethod">Seleccione el método de pago</span>
+    <button type="button" id="selectPaymentMethod" class="btn btn-primary" style="margin-left: 20px;" data-bs-toggle="modal" data-bs-target="#payment-method">Seleccionar</button>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-credit-card"></i> Método de pago</h1>
+
+      <div form="adressForm" class="modal fade" id="payment-method" tabindex="-1" aria-labelledby="payment-method-title" aria-hidden="true" aria-describedby="modal-feedback">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="payment-method-title"><i class="fa-solid fa-credit-card"></i> Método de pago</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <input type="radio" id="paymentMethodCard" name="paymentMethod" value="">
             <label for="paymentMethodCard">Tarjeta de crédito</label>
             <hr>
-            <table>
-              <tr>
-                <td><label for="ccn">Número de tarjeta</label></td>
-                <td><label for="ccn">CCV</label></td>
-              </tr>
-              <tr>
-                <td><input id="ccn" type="tel" style="width:100%" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19"></td>
-                <td><input id="ccv" type="tel" style="width:30%" inputmode="numeric" maxlength="3"></td>
-              </tr>
-            </table><br>
-            <label for="ccn">Vencimiento (MM/AA)</label><br>
-            <input id="expirationDate" type="date" style="width:30%">
+            <form id="card-form" novalidate>
+
+              <table>
+                <tr>
+                  <td><label for="ccn">Número de tarjeta</label></td>
+                  <td><label for="ccn">CCV</label></td>
+                </tr>
+                <tr>
+                  <td><input required id="ccn" type="tel" style="width:100%" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19"></td>
+                  <td><input required id="ccv" type="tel" style="width:30%" inputmode="numeric" maxlength="3"></td>
+                </tr>
+              </table><br>
+
+              <label for="ccn">Vencimiento (MM/AA)</label><br>
+              <input required id="expirationDate" type="date" style="width:30%">
+
+            </form>
             <br><br>
             <input type="radio" id="paymentMethodTransfer" name="paymentMethod" value="">
             <label for="paymentMethodTransfer">Trasferencia bancaria</label>
             <hr>
-            <label for="transferAccNum">Número de cuenta</label><br>
-            <input id="transferAccNum" type="tel" maxlength="30" inputmode="numeric" style="width:30%">
+            <form id="transfer-form" novalidate>
 
+              <label for="transferAccNum">Número de cuenta</label><br>
+              <input required id="transferAccNum" type="tel" maxlength="30" inputmode="numeric" style="width:30%">
+              
+            </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="applyPaymentMethod">Aplicar</button>
@@ -148,9 +186,13 @@
         </div>
       </div>
     </div>
+    <div class="invalid-feedback" id="modal-feedback">
+      Por favor, ingrese un método de pago válido.
+    </div>
+
     <div> 
     <div class="finalize-purchase"> 
-      <button id="endShopping">Finalizar compra</button>
+      <button id="endShopping" form="adressForm"  type="submit">Finalizar compra</button>
     </div>
   </div>
     <div>      
