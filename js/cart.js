@@ -22,18 +22,24 @@ const standard = document.getElementById('standard')
 const unitCost = document.getElementById('unit-cost')
 const shippingCost = document.getElementById('shipping-cost')
 const totalCost = document.getElementById('total-cost')
+const endShopping = document.getElementById('endShopping')
+const streetAddress = document.getElementById('streetAddress')
+const adressForm = document.getElementById('adressForm')
+const cardForm = document.getElementById('card-form')
+const transferForm = document.getElementById('transfer-form')
+const succesfulyPurchase = document.getElementById('succesfuly-purchase')
 
+succesfulyPurchase.style.display = 'none'
 
 
 fetch(API_URL).then(res => res.json()).then(element => {
     let data = JSON.parse(localStorage.getItem('cart'))
     data.unshift(...element.articles)
-    console.log(data)
+    localStorage.setItem('cart', JSON.stringify(data))
     loadCart(data)})
 
 function loadCart (data){
     const currency_conversion = 40
-    
     let totalCost = 0;
 
     if(data.length == 0){
@@ -53,7 +59,6 @@ function loadCart (data){
             if(element.currency == 'UYU'){
                 cost /= currency_conversion
             }
-            console.log(element.count, cost, cost * element.count)
             totalCost += cost * Number(element.count);
         }
     }
@@ -91,6 +96,9 @@ function addProduct (element){
     if(element.currency == 'UYU'){
         unitCost = Math.round(unitCost / 40);
     }
+    if(element.count < 1){
+        element.count = 1
+    }
     article.classList = 'article'
     article.innerHTML = `<img src='${element.image}'/> 
     <p onclick="localStorage.setItem('currentProduct', '${element.id}'); window.location = 'product-info.html'">${element.name}</p>
@@ -117,7 +125,6 @@ function updateCount(count, cost, id){
             element.count = count
         }
     });
-    console.log(elements)
     loadCart(elements)
 }
 
@@ -131,7 +138,6 @@ applyPaymentMethod.addEventListener('click', function(){
         localStorage.setItem('paymentMethod','transfer')
         paymentMethodStatus.innerHTML = 'Transferencia bancaria'
     }
-    // localStorage.setItem('paymentMethod',)
 })
 
 paymentMethodCard.addEventListener('click', function(){
@@ -148,88 +154,122 @@ paymentMethodTransfer.addEventListener('click', function(){
     expirationDate.disabled = true
 })
 
-function validateDeliveryType() {
-    let deliveryRadios = document.getElementsByName("deliveryType");
-    let isValid = false;
 
-    for (let i = 0; i < deliveryRadios.length; i++) {
-        if (deliveryRadios[i].checked) {
-            isValid = true;
-            break;
+adressForm.addEventListener('submit', adressSubmit)
+function adressSubmit (event){
+    event.preventDefault()
+    event.stopPropagation()
+
+    if(!cardForm.checkValidity() && localStorage.getItem('paymentMethod') == 'card'){
+        let cardFormValues = Array.from(cardForm.getElementsByTagName('input'))
+        for(input of cardFormValues){
+            if(!input.validity.valid){
+                paymentMethodStatus.classList.add("is-invalid")
+            }
+        }    
+    }else if(!transferForm.checkValidity() && localStorage.getItem('paymentMethod') == 'transfer'){
+        let transferFormValues = Array.from(transferForm.getElementsByTagName('input'))
+        for(input of transferFormValues){
+            if(!input.validity.valid){
+                paymentMethodStatus.classList.add("is-invalid")
+            }
         }
+    }else{
+        if(adressForm.checkValidity()){
+            succesfulyPurchase.style.display = 'block'
+            localStorage.setItem('cart', '[]')
+            loadCart([])
+            setTimeout(()=>{succesfulyPurchase.style.display = 'none'}, 5000)
+        }
+        paymentMethodStatus.classList.remove("is-invalid")
     }
+    transferForm.classList.add('was-validated')
+    cardForm.classList.add('was-validated')
+    adressForm.classList.add('was-validated')
 
-    let validationDelivery = document.getElementById("validationDelivery");
-
-    if (!isValid) {
-        validationDelivery.style.display = 'block'
-    } 
-    else{
-        validationDelivery.style.display = 'none'
-    }
 }
 
-// Funcion para validar método de pago y campos requeridos
-function validatePaymentMethod() {
-    let paymentRadios = document.getElementsByName("paymentMethod");
-    let isPaymentValid = false;
+// function validateDeliveryType() {
+//     let deliveryRadios = document.getElementsByName("deliveryType");
+//     let isValid = false;
 
-    for (let i = 0; i < paymentRadios.length; i++) {
-        if (paymentRadios[i].checked) {
-            isPaymentValid = true;
-            break;
-        }
-    }
+//     for (let i = 0; i < deliveryRadios.length; i++) {
+//         if (deliveryRadios[i].checked) {
+//             isValid = true;
+//             break;
+//         }
+//     }
 
-    if (!isPaymentValid) {
-        paymentFeedback.style.display = 'block'
-    } 
-    else{
-        paymentFeedback.style.display = 'none'
-    }
+//     let validationDelivery = document.getElementById("validationDelivery");
 
-    // Valida los campos requeridos para cada metodo de pago
-    if (paymentMethodCard.checked) {
-        if (!ccn.checkValidity()) {
-            paymentFeedback.te
-            paymentFeedback.style.display = 'block'
-        } else {
-            ccn.classList.remove('is-invalid');
-        }
-    } else {
-        streetAddress.classList.remove('is-invalid');
-    }
-}
+//     if (!isValid) {
+//         validationDelivery.style.display = 'block'
+//     } 
+//     else{
+//         validationDelivery.style.display = 'none'
+//     }
+// }
 
-buyBtn.addEventListener('click', function(){
-    // Valida la calle
-    if (!streetAddress.checkValidity()) {
-        event.preventDefault();
-        streetAddress.classList.add('is-invalid');
-    } else {
-        streetAddress.classList.remove('is-invalid');
-    }
-    // Valida el numero
-    if (!addressNumber.checkValidity()) {
-        event.preventDefault();
-        addressNumber.classList.add('is-invalid');
-    } else {
-        addressNumber.classList.remove('is-invalid');
-    }
-    // Valida la esquina
-    if (!addressDetail.checkValidity()) {
-        event.preventDefault();
-        addressDetail.classList.add('is-invalid');
-    } else {
-        addressDetail.classList.remove('is-invalid');
-    }
+// // Funcion para validar método de pago y campos requeridos
+// function validatePaymentMethod() {
+//     let paymentRadios = document.getElementsByName("paymentMethod");
+//     let isPaymentValid = false;
+
+//     for (let i = 0; i < paymentRadios.length; i++) {
+//         if (paymentRadios[i].checked) {
+//             isPaymentValid = true;
+//             break;
+//         }
+//     }
+
+//     if (!isPaymentValid) {
+//         paymentFeedback.style.display = 'block'
+//     } 
+//     else{
+//         paymentFeedback.style.display = 'none'
+//     }
+
+//     // Valida los campos requeridos para cada metodo de pago
+//     if (paymentMethodCard.checked) {
+//         if (!ccn.checkValidity()) {
+//             paymentFeedback.te
+//             paymentFeedback.style.display = 'block'
+//         } else {
+//             ccn.classList.remove('is-invalid');
+//         }
+//     } else {
+//         streetAddress.classList.remove('is-invalid');
+//     }
+// }
+
+// buyBtn.addEventListener('click', function(){
+//     // Valida la calle
+//     if (!streetAddress.checkValidity()) {
+//         event.preventDefault();
+//         streetAddress.classList.add('is-invalid');
+//     } else {
+//         streetAddress.classList.remove('is-invalid');
+//     }
+//     // Valida el numero
+//     if (!addressNumber.checkValidity()) {
+//         event.preventDefault();
+//         addressNumber.classList.add('is-invalid');
+//     } else {
+//         addressNumber.classList.remove('is-invalid');
+//     }
+//     // Valida la esquina
+//     if (!addressDetail.checkValidity()) {
+//         event.preventDefault();
+//         addressDetail.classList.add('is-invalid');
+//     } else {
+//         addressDetail.classList.remove('is-invalid');
+//     }
     // Valida si hay tipo de envio seleccionado
     
-    validateDeliveryType()
+//     validateDeliveryType()
 
     // Valida metodo de pago
-    validatePaymentMethod()
+//     validatePaymentMethod()
     //cosas que suceden al darle click a comprar
     //validacion y eso en desarrollo
-})
-
+// })
