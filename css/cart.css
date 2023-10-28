@@ -1,6 +1,6 @@
 .article{
     display: grid;
-    grid-template-columns: 1fr 3fr 3fr 1fr 2fr;
+    grid-template-columns: 1fr 3fr 3fr 1fr 1fr 1fr;
     grid-gap: 10px;
     grid-auto-rows: min(1rem, 50px);
     margin: 0 2vw 3rem 2vw;
@@ -16,6 +16,12 @@
     margin: 2vw;
 }
 .article-title{
-    font-weight: bold;
-    
+    font-weight: bold;   
+}
+.article button{
+    aspect-ratio: 1;
+    max-height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
