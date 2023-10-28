@@ -145,6 +145,25 @@ paymentMethodTransfer.addEventListener('click', function(){
     expirationDate.disabled = true
 })
 
+applyPaymentMethod.addEventListener('click', ()=>{
+    if(!cardForm.checkValidity() && localStorage.getItem('paymentMethod') == 'card'){
+        let cardFormValues = Array.from(cardForm.getElementsByTagName('input'))
+        for(input of cardFormValues){
+            if(!input.validity.valid){
+                paymentMethodStatus.classList.add("is-invalid")
+            }
+        }    
+    }else if(!transferForm.checkValidity() && localStorage.getItem('paymentMethod') == 'transfer'){
+        let transferFormValues = Array.from(transferForm.getElementsByTagName('input'))
+        for(input of transferFormValues){
+            if(!input.validity.valid){
+                paymentMethodStatus.classList.add("is-invalid")
+            }
+        }
+    }else{
+        paymentMethodStatus.classList.remove("is-invalid")
+    }
+})
 
 adressForm.addEventListener('submit', adressSubmit)
 function adressSubmit (event){
