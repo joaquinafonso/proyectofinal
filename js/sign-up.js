@@ -18,6 +18,8 @@ different_passwords.style.display = 'none'
 /*
         *** ESTRUCTURA DEL REGISTRO DE USUARIOS ***
 
+        ACTUAL:
+
 localStorage = {
     register: {
         isConected: true,
@@ -29,6 +31,27 @@ localStorage = {
             'email_4': 'contraseña_4',
             'email_5': 'contraseña_5'
         }
+    }
+}
+
+        OBJETIVO:
+
+localStorage = {
+    register: {
+        isConected: true,
+        actualUser: 'email-actual',
+        users:[
+            {
+                email: 'email_1',
+                password: 'contraseña_1',
+                name: 'nombre_1',
+                second_name: 'segundo_nombre_1',
+                lastname: 'apellido_1',
+                second_lastname: 'segundo_apellido_1'
+                cellphone: 'telefono_1',
+                photo: 'imagen_1'
+            },...
+        ]
     }
 }
 */
