@@ -12,8 +12,19 @@ let register = JSON.parse(localStorage.getItem('register'));
 
 let registerEstructure = {
   isConected:false, 
-  actualUser: '-',
-  users: {'admin': 'admin'}
+  actualUser: {email: ''},
+  users: [
+    {
+        email: 'admin',
+        password: 'admin',
+        name: 'Nombre',
+        second_name: 'Segundo Nombre',
+        lastname: 'Apellido',
+        second_lastname: 'Segundo Apellido',
+        cellphone: 'Teléfono',
+        photo: 'Imagen'
+    }
+  ]
 }
 
 if(localStorage.getItem('cart') === null){
@@ -34,7 +45,7 @@ if(!/login\.html$/.test(window.location.pathname) && !/sign-up\.html$/.test(wind
       actualUser,
       function (element) {
       if (element.nodeName == "A"){
-          element.innerHTML = register.actualUser
+          element.innerHTML = register.actualUser.email
         }
       }
     )

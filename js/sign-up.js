@@ -18,24 +18,6 @@ different_passwords.style.display = 'none'
 /*
         *** ESTRUCTURA DEL REGISTRO DE USUARIOS ***
 
-        ACTUAL:
-
-localStorage = {
-    register: {
-        isConected: true,
-        actualUser: 'email-actual',
-        users: {
-            'email_1': 'contraseña_1',
-            'email_2': 'contraseña_2',
-            'email_3': 'contraseña_3',
-            'email_4': 'contraseña_4',
-            'email_5': 'contraseña_5'
-        }
-    }
-}
-
-        OBJETIVO:
-
 localStorage = {
     register: {
         isConected: true,
@@ -47,10 +29,11 @@ localStorage = {
                 name: 'nombre_1',
                 second_name: 'segundo_nombre_1',
                 lastname: 'apellido_1',
-                second_lastname: 'segundo_apellido_1'
+                second_lastname: 'segundo_apellido_1',
                 cellphone: 'telefono_1',
                 photo: 'imagen_1'
-            },...
+            },
+            ...
         ]
     }
 }
@@ -61,7 +44,7 @@ localStorage = {
 function registerUser (event){
     event.preventDefault()
     if (email.value != '' && password.value != ''){
-        if(register.users.hasOwnProperty(email.value)){ // Si el correo ya estaba registrado muestra una alerta
+        if(register.users.some(user => user.email == email.value)){ // Si el correo ya estaba registrado muestra una alerta
             invalid_user.style.display = 'block'
             setTimeout(()=>{invalid_user.style.display = 'none'}, 5000)
         }else if(password.value != confirm_password.value){ // Si las contraseñas ingresadas no son iguales muestra un alerta
@@ -78,9 +61,19 @@ function registerUser (event){
 
 
 function validateUser(){ // Se guardan los valores establecidos, establece que hay una sesión abierta, guarda cual es la sesión abierta y redirecciona al índice 
+    let newUser = {
+        email: email.value,
+        password: password.value,
+        name: '',
+        second_name: '',
+        lastname: '',
+        second_lastname: '',
+        cellphone: '',
+        photo: ''
+    }
     register.isConected = true
-    register.actualUser = email.value
-    register.users[email.value] = password.value
+    register.actualUser = newUser
+    register.users.push(newUser)
     localStorage.setItem('register', JSON.stringify(register))
     location.href = 'index.html'      
 }

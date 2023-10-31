@@ -23,15 +23,20 @@ function toMain (event){
 button.addEventListener("click", toMain)
 
 function validateUser(){
-    if(register.users.hasOwnProperty(email.value)){ // Si está registrado
-        if( register.users[email.value] == password.value){ // Si la contraseña coincide
-            register.isConected = true
-            register.actualUser = email.value
-            localStorage.setItem('register', JSON.stringify(register))
-            location.href = 'index.html' // Se establece que hay una sesión abierta, cual es el usuario y redirecciona al índice
-        }else{
-            wrong_password.style.display = 'block'
-            setTimeout(()=>{wrong_password.style.display = 'none'}, 5000)
+    if(register.users.some(user => user.email == email.value)){ // Si está registrado
+        for(let user of register.users){
+            if(user.email == email.value){ // Si se encuentra un usuario registrado con ese mail
+                if(user.password == password.value){ // Si la contraseña coincide
+                    register.isConected = true
+                    register.actualUser = JSON.stringify(email)
+                    localStorage.setItem('register', JSON.stringify(register))
+                    location.href = 'index.html' // Se establece que hay una sesión abierta, cual es el usuario y redirecciona al índice
+                }else{
+                    wrong_password.style.display = 'block'
+                    setTimeout(()=>{wrong_password.style.display = 'none'}, 5000)
+                }
+                break;
+            }
         }
     }else{ // En caso de que no se haya registrado el email antes
         let nuevaCuenta = confirm("El email ingresado no ha sido registrado. Deseas crear una cuenta?") // Pregunta si quiere crear cuenta
