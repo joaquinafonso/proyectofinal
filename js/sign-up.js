@@ -30,7 +30,7 @@ localStorage = {
                 second_name: 'segundo_nombre_1',
                 lastname: 'apellido_1',
                 second_lastname: 'segundo_apellido_1',
-                cellphone: 'telefono_1',
+                phone: 'telefono_1',
                 photo: 'imagen_1'
             },
             ...
@@ -68,7 +68,7 @@ function validateUser(){ // Se guardan los valores establecidos, establece que h
         second_name: '',
         lastname: '',
         second_lastname: '',
-        cellphone: '',
+        phone: '',
         photo: ''
     }
     register.isConected = true

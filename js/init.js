@@ -21,7 +21,7 @@ let registerEstructure = {
         second_name: 'Segundo Nombre',
         lastname: 'Apellido',
         second_lastname: 'Segundo Apellido',
-        cellphone: 'Teléfono',
+        phone: 'Teléfono',
         photo: 'Imagen'
     }
   ]
@@ -34,6 +34,15 @@ if(localStorage.getItem('register') === null || register.isConected === undefine
   localStorage.setItem('register', JSON.stringify(registerEstructure))
 }
 
+
+const endSessionBtn = document.getElementById('endSession');
+endSessionBtn.addEventListener('click', function () {
+  register.isConected = false
+  register.actualUser = '{}'
+  localStorage.setItem('register', JSON.stringify(register))
+  alert('Has cerrado sesión')
+  location.href = 'login.html'
+})
 
 let actualUser = document.getElementsByClassName("username")
 if(!/login\.html$/.test(window.location.pathname) && !/sign-up\.html$/.test(window.location.pathname)){

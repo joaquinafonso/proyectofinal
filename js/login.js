@@ -28,7 +28,7 @@ function validateUser(){
             if(user.email == email.value){ // Si se encuentra un usuario registrado con ese mail
                 if(user.password == password.value){ // Si la contraseña coincide
                     register.isConected = true
-                    register.actualUser = JSON.stringify(email)
+                    register.actualUser = user
                     localStorage.setItem('register', JSON.stringify(register))
                     location.href = 'index.html' // Se establece que hay una sesión abierta, cual es el usuario y redirecciona al índice
                 }else{

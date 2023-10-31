@@ -9,6 +9,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/my-profile.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -64,7 +65,45 @@
     </div>
   </nav>
   <main>
-
+    <div class="container">
+      <h1 class="mt-4">Perfil de Usuario</h1>
+      <br>
+      <form id="user-form" novalidate>
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="name">Nombre:</label>
+                      <input type="text" class="form-control" id="name" name="name" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="last-name">Apellido:</label>
+                      <input type="text" class="form-control" id="lastname" name="last-name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="middle-name">Segundo nombre:</label>
+                    <input type="text" class="form-control" id="second-name" name="middle-name">
+                  </div>
+                  <div class="form-group">
+                      <label for="segundo_nombre">Segundo Apellido:</label>
+                      <input type="text" class="form-control" id="second-lastname" name="second_lastname">
+                  </div>
+                  <div class="form-group">
+                      <label for="phone">Teléfono de Contacto:</label>
+                      <input type="tel" class="form-control" id="phone" name="phone">
+                  </div>
+              </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+      </form>
+    </div>
+      
+    </div>
     <input type="file" id="input-avatar" name="avatar" accept="image/*" />
     <img src="./img/img_perfil.png" id="display-avatar" >
   </main>
