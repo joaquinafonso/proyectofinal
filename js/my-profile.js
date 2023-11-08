@@ -29,7 +29,7 @@ phone.value = register.actualUser.phone
 
 form.addEventListener('submit', submitValues)
 function submitValues (event){
-    if(register.users.filter(user => user.email == email.value).length > 1){
+    if(register.users.filter(user => user.email == email.value).length >= 1 && email.value != register.actualUser.email){
         event.preventDefault()
         event.stopPropagation()
         email.setCustomValidity("Email en uso")
@@ -42,7 +42,6 @@ function submitValues (event){
         event.preventDefault()
         event.stopPropagation()
     }else{
-        console.log(register)
         let index = register.users.map(user => user.email).indexOf(register.actualUser.email)
         register.actualUser.name = name.value
         register.actualUser.second_name = secondName.value
@@ -52,8 +51,6 @@ function submitValues (event){
         register.actualUser.phone = phone.value
         register.actualUser.photo = inputAvatar.value != "" ? URL.createObjectURL(inputAvatar.files[0]) : register.actualUser.photo
         register.users[index] = register.actualUser
-        console.log(index)
-        console.log(register)
         localStorage.setItem('register', JSON.stringify(register))
     }
     form.classList.add('was-validated')    
