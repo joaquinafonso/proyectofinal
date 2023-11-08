@@ -2,6 +2,7 @@ const inputAvatar = document.getElementById('input-avatar')
 const displyaAvatar = document.getElementById('display-avatar')
 const form = document.getElementById('user-form')
 const invalidEmail = document.getElementById('invalid_email')
+const successfullyUpdate = document.getElementById('successfully_update')
 
 const name = document.getElementById('name')
 const secondName = document.getElementById('second-name')
@@ -11,6 +12,7 @@ const email = document.getElementById('email')
 const phone = document.getElementById('phone')
 
 invalidEmail.style.display = 'none'
+successfullyUpdate.style.display = 'none'
 
 inputAvatar.addEventListener('change', updateImageDisplay)
 function updateImageDisplay (){
@@ -29,19 +31,16 @@ phone.value = register.actualUser.phone
 
 form.addEventListener('submit', submitValues)
 function submitValues (event){
+    event.preventDefault()
+    event.stopPropagation()
     if(register.users.filter(user => user.email == email.value).length >= 1 && email.value != register.actualUser.email){
-        event.preventDefault()
-        event.stopPropagation()
         email.setCustomValidity("Email en uso")
         invalidEmail.style.display = 'block'
         setTimeout(()=>{invalidEmail.style.display = 'none'}, 5000)
     }else{
         email.setCustomValidity("")
     }
-    if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-    }else{
+    if (form.checkValidity()) {
         let index = register.users.map(user => user.email).indexOf(register.actualUser.email)
         register.actualUser.name = name.value
         register.actualUser.second_name = secondName.value
@@ -52,6 +51,8 @@ function submitValues (event){
         register.actualUser.photo = inputAvatar.value != "" ? URL.createObjectURL(inputAvatar.files[0]) : register.actualUser.photo
         register.users[index] = register.actualUser
         localStorage.setItem('register', JSON.stringify(register))
+        successfullyUpdate.style.display = 'block'
+        setTimeout(()=>{successfullyUpdate.style.display = 'none'}, 5000)
     }
     form.classList.add('was-validated')    
 }
