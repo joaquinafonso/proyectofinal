@@ -69,7 +69,7 @@ function validateUser(){ // Se guardan los valores establecidos, establece que h
         lastname: '',
         second_lastname: '',
         phone: '',
-        photo: ''
+        photo: "./img/img_perfil.png"
     }
     register.isConected = true
     register.actualUser = newUser

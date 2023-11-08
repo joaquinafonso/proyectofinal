@@ -64,11 +64,16 @@
       </div>
     </div>
   </nav>
+  <section id="alertas">
+    <div class="alert alert-danger text-center" role="alert" id="invalid_email">
+      <h4 class="alert-heading">El email ingresado ya tiene una cuenta asociada</h4>
+    </div>
+  </section>
   <main>
     <div class="container">
       <h1 class="mt-4">Perfil de Usuario</h1>
       <br>
-      <form id="user-form" novalidate>
+      <form id="user-form" class="needs-validation" novalidate>
           <div class="row">
               <div class="col-md-6">
                   <div class="form-group">
