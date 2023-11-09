@@ -15,9 +15,22 @@ invalidEmail.style.display = 'none'
 successfullyUpdate.style.display = 'none'
 
 inputAvatar.addEventListener('change', updateImageDisplay)
-function updateImageDisplay (){
+
+async function encodeFileAsBase64URL(file) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.addEventListener('loadend', () => {
+            resolve(reader.result);
+        });
+        reader.readAsDataURL(file);
+    });
+};
+
+async function updateImageDisplay(){
     if(inputAvatar.value != ""){
-        displyaAvatar.src = URL.createObjectURL(inputAvatar.files[0])
+        const url = await encodeFileAsBase64URL(inputAvatar.files[0]);
+        console.log(url)
+        displyaAvatar.src = url
     }
 }
 
@@ -48,7 +61,7 @@ function submitValues (event){
         register.actualUser.second_lastname = secondLastname.value
         register.actualUser.email = email.value
         register.actualUser.phone = phone.value
-        register.actualUser.photo = inputAvatar.value != "" ? URL.createObjectURL(inputAvatar.files[0]) : register.actualUser.photo
+        register.actualUser.photo = inputAvatar.value != "" ? displyaAvatar.src : register.actualUser.photo
         register.users[index] = register.actualUser
         localStorage.setItem('register', JSON.stringify(register))
         successfullyUpdate.style.display = 'block'
