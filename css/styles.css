@@ -45,7 +45,7 @@ nav a {
 
 @media (min-width: 800px) {
   .jumbotron {
-    height: 50vh;
+    height: 55vh;
     padding-top: 6rem;
     padding-bottom: 6rem;
   }
@@ -166,6 +166,10 @@ footer p {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.alert{
+  z-index: 10;
 }
 
 .signin {
