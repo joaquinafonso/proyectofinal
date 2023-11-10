@@ -12,8 +12,19 @@ let register = JSON.parse(localStorage.getItem('register'));
 
 let registerEstructure = {
   isConected:false, 
-  actualUser: '-',
-  users: {'admin': 'admin'}
+  actualUser: {email: ''},
+  users: [
+    {
+        email: 'admin',
+        password: 'admin',
+        name: 'Nombre',
+        second_name: 'Segundo Nombre',
+        lastname: 'Apellido',
+        second_lastname: 'Segundo Apellido',
+        phone: 'Teléfono',
+        photo: 'Imagen'
+    }
+  ]
 }
 
 if(localStorage.getItem('cart') === null){
@@ -23,6 +34,15 @@ if(localStorage.getItem('register') === null || register.isConected === undefine
   localStorage.setItem('register', JSON.stringify(registerEstructure))
 }
 
+
+const endSessionBtn = document.getElementById('endSession');
+endSessionBtn.addEventListener('click', function () {
+  register.isConected = false
+  register.actualUser = '{}'
+  localStorage.setItem('register', JSON.stringify(register))
+  alert('Has cerrado sesión')
+  location.href = 'login.html'
+})
 
 let actualUser = document.getElementsByClassName("username")
 if(!/login\.html$/.test(window.location.pathname) && !/sign-up\.html$/.test(window.location.pathname)){
@@ -34,7 +54,7 @@ if(!/login\.html$/.test(window.location.pathname) && !/sign-up\.html$/.test(wind
       actualUser,
       function (element) {
       if (element.nodeName == "A"){
-          element.innerHTML = register.actualUser
+          element.innerHTML = register.actualUser.email
         }
       }
     )
