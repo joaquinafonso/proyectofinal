@@ -2,11 +2,24 @@ const express = require("express");
 const app = express();
 const puerto = 3000;
 
+const jwt = require('jsonwebtoken')
+const SECRET_KEY = "CoNtRaSeNa sUpEr sEcReTa"
+
 const cors = require('cors');
 app.use(cors({
     origin: '*'
 }));
 
+
+app.use("/cart", async (req, res, next) => {
+  try{
+    const decoded = jwt.verify(req.headers.token, SECRET_KEY)
+    console.log(decoded)
+    next()
+  } catch {
+    res.status(401).json({messaje: 'Usuario no válido'})
+  }
+})
 
 app.get("/cart", async (req, res) => {
   const CART_BUY_URL = require('./api/cart/buy.json');
@@ -49,6 +62,20 @@ app.get("/user-cart/:id", async (req, res) => {
     res.json(CART_INFO_URL);
   }
 )
+
+
+
+app.post("/login", (req, res) => {
+  console.log(req)
+  const {username} = req.body
+  if(username){
+    const token = jwt.sign({username}, SECRET_KEY)
+    res.status(200).json({token})
+  }else{
+    res.status(401).json({message: "Algo salió mal "})
+
+  }
+})
 
 
 
