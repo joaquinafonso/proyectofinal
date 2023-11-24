@@ -10,6 +10,7 @@ app.use(cors({
     origin: '*'
 }));
 
+app.use(express.json());
 
 app.use("/cart", async (req, res, next) => {
   try{
@@ -66,14 +67,13 @@ app.get("/user-cart/:id", async (req, res) => {
 
 
 app.post("/login", (req, res) => {
-  console.log(req)
-  const {username} = req.body
+  console.log(req.body)
+  const username = req.body
   if(username){
     const token = jwt.sign({username}, SECRET_KEY)
-    res.status(200).json({token})
+    res.status(200).json({token: token})
   }else{
-    res.status(401).json({message: "Algo salió mal "})
-
+    res.status(401).json({message: "Algo salió mal"})
   }
 })
 
