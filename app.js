@@ -2,18 +2,17 @@ const express = require("express");
 const app = express();
 const puerto = 3000;
 
-app.get("/",(req,res)=>{
-    res.send('<h1>bienvenido a el servidor</h1>');
-});
+const cors = require('cors');
+app.use(cors({
+    origin: '*'
+}));
 
-/*const CATEGORIES_URL = require('./api/cats/cat.json');
-const PRODUCTS_URL = require('./api/cats_products/');
-const PRODUCT_INFO_URL = require('./api/products/');
-const PRODUCT_INFO_COMMENTS_URL = require('./api/products_comments/');
-const CART_INFO_URL = require('./api/user_cart/');
-const CART_BUY_URL = require('./api/cart/buy.json');
-const EXT_TYPE = '.json';*/
 
+app.get("/cart", async (req, res) => {
+  const CART_BUY_URL = require('./api/cart/buy.json');
+  res.json(CART_BUY_URL);
+}
+)
 
 app.get("/cats", async (req, res) => {
     const CATEGORIES_URL = require('./api/cats/cat.json');
@@ -21,23 +20,36 @@ app.get("/cats", async (req, res) => {
   }
 )
 
-app.get("/sell", async (req, res) => {
-    const PUBLISH_PRODUCT_URL = require('./api/sell/publish.json');
-    res.json(CATEGORIES_URL);
-  }
+app.get("/cats-products/:id", async (req, res) => {
+  const PRODUCT_INFO_URL = require('./api/cats_products/' + req.params.id + '.json');
+  res.json(PRODUCT_INFO_URL);
+}
 )
 
 app.get("/products/:id", async (req, res) => {
-    const PRODUCT_INFO_URL = require('./api/products/' + req.params.id);
-    res.json(CATEGORIES_URL);
-  }
+  const PRODUCT_URL = require('./api/products/' + req.params.id + '.json');
+  res.json(PRODUCT_URL);
+}
+)
+
+app.get("/products-comments/:id", async (req, res) => {
+  const PRODUCT_INFO_COMMENTS_URL = require('./api/products_comments/' + req.params.id + '.json');
+  res.json(PRODUCT_INFO_COMMENTS_URL);
+}
 )
 
 app.get("/sell", async (req, res) => {
     const PUBLISH_PRODUCT_URL = require('./api/sell/publish.json');
-    res.json(CATEGORIES_URL);
+    res.json(PUBLISH_PRODUCT_URL);
   }
 )
+
+app.get("/user-cart", async (req, res) => {
+    const CART_INFO_URL = require('./api/user_cart/');
+    res.json(CART_INFO_URL);
+  }
+)
+
 
 
 app.listen(puerto, ()=>{
