@@ -2,8 +2,8 @@ const container = document.getElementById('product-info-container')
 const relatedSection = document.getElementById('relatedSection')
 
 let productId = localStorage.getItem('currentProduct')
-const API_URL = PRODUCT_INFO_URL + productId + ".json"
-const COMMENTS_URL = PRODUCT_INFO_COMMENTS_URL + productId + ".json"
+const API_URL = PRODUCT_INFO_URL + productId
+const COMMENTS_URL = PRODUCT_INFO_COMMENTS_URL + productId
 
 const missing_values = document.getElementById("faltan_datos")
 const successfullyAdded = document.getElementById('successfully_added')

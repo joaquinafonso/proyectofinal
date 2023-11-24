@@ -44,8 +44,8 @@ app.get("/sell", async (req, res) => {
   }
 )
 
-app.get("/user-cart", async (req, res) => {
-    const CART_INFO_URL = require('./api/user_cart/');
+app.get("/user-cart/:id", async (req, res) => {
+    const CART_INFO_URL = require('./api/user_cart/' + req.params.id + '.json');
     res.json(CART_INFO_URL);
   }
 )
