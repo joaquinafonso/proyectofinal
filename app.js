@@ -15,7 +15,6 @@ app.use(express.json());
 app.use("/cart", async (req, res, next) => {
   try{
     const decoded = jwt.verify(req.headers.token, SECRET_KEY)
-    console.log(decoded)
     next()
   } catch {
     res.status(401).json({messaje: 'Usuario no válido'})
@@ -67,8 +66,7 @@ app.get("/user-cart/:id", async (req, res) => {
 
 
 app.post("/login", (req, res) => {
-  console.log(req.body)
-  const username = req.body
+  const username = req.body.username
   if(username){
     const token = jwt.sign({username}, SECRET_KEY)
     res.status(200).json({token: token})
