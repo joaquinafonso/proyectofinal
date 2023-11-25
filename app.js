@@ -22,20 +22,17 @@ app.use(express.json());
 app.use("/cart", (req,res,next)=>{
   try {
     const decoded = jwt.verify(req.headers["access-token"], SECRET_KEY);
-    console.log(decoded)
     next();
   } catch(error) {
     res.status(401).json({message: "Usuario no autorizado"});
   }
 });
 
-
-/*
 app.get("/cart", async (req, res) => {
   const CART_BUY_URL = require('./api/cart/buy.json');
   res.json(CART_BUY_URL);
-}
-)*/
+})
+
 
 app.get("/cats", async (req, res) => {
     const CATEGORIES_URL = require('./api/cats/cat.json');
@@ -76,9 +73,9 @@ app.get("/user-cart/:id", async (req, res) => {
 
 
 app.post("/login", (req, res) => {
-  const username = req.body.username
-  if(username){
-    const token = jwt.sign({username}, SECRET_KEY)
+  const name = req.body.name
+  if(name != ""){
+    const token = jwt.sign({name}, SECRET_KEY)
     res.status(200).json({token: token})
   }else{
     res.status(401).json({message: "Algo salió mal"})

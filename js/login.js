@@ -30,7 +30,25 @@ function validateUser(){
                     register.isConected = true
                     register.actualUser = user
                     localStorage.setItem('register', JSON.stringify(register))
-                    location.href = 'index.html' // Se establece que hay una sesión abierta, cual es el usuario y redirecciona al índice
+
+                    var myHeaders = new Headers();
+                    myHeaders.append("Content-Type", "application/json");
+                    var raw = JSON.stringify({name: register.actualUser.name});
+                    var requestOptions = {
+                        method: 'POST',
+                        headers: myHeaders,
+                        body: raw,
+                        redirect: 'follow'
+                    };
+
+                    fetch("http://localhost:3000/login", requestOptions)
+                    .then(response => response.text())
+                    .then(result => {
+                        console.log(result)
+                        localStorage.setItem('access-token', result.token)
+                        location.href = 'index.html'
+                    })
+                    .catch(error => console.log('error', error));
                 }else{
                     wrong_password.style.display = 'block'
                     setTimeout(()=>{wrong_password.style.display = 'none'}, 5000)

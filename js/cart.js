@@ -19,8 +19,10 @@ const adressForm = document.getElementById('adressForm')
 const cardForm = document.getElementById('card-form')
 const transferForm = document.getElementById('transfer-form')
 const succesfulyPurchase = document.getElementById('succesfuly-purchase')
+const rejectedPurchase = document.getElementById('rejected-purchase')
 
 succesfulyPurchase.style.display = 'none'
+rejectedPurchase.style.display = 'none'
 
 
 fetch(API_URL).then(res => res.json()).then(element => {
@@ -186,10 +188,32 @@ function adressSubmit (event){
         }
     }else{
         if(adressForm.checkValidity()){
-            succesfulyPurchase.style.display = 'block'
-            localStorage.setItem('cart', '[]')
-            loadCart([])
-            setTimeout(()=>{succesfulyPurchase.style.display = 'none'}, 5000)
+            var myHeaders = new Headers();
+            myHeaders.append("access-token", localStorage.getItem('access-token'));
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch(CART_BUY_URL, requestOptions)
+            .then(res => {
+                if(res.status == 401)
+                    throw new Error('usuario no válido')
+                else
+                    return res.json()
+                })
+            .then(res => {
+                succesfulyPurchase.style.display = 'block'
+                localStorage.setItem('cart', '[]')
+                loadCart([])
+                setTimeout(()=>{succesfulyPurchase.style.display = 'none'}, 5000)
+            })
+            .catch(err => {
+                console.log(err)
+                rejectedPurchase.style.display = 'block'
+                setTimeout(()=>{rejectedPurchase.style.display = 'none'}, 5000)
+            })
         }
         paymentMethodStatus.classList.remove("is-invalid")
     }

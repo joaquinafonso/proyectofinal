@@ -66,6 +66,25 @@ function submitValues (event){
         localStorage.setItem('register', JSON.stringify(register))
         successfullyUpdate.style.display = 'block'
         setTimeout(()=>{successfullyUpdate.style.display = 'none'}, 5000)
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var raw = JSON.stringify({name: register.actualUser.name});
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:3000/login", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+            localStorage.setItem('access-token', result.token)
+            console.log(localStorage.getItem('access-token'))
+        })
+        .catch(error => console.log('error', error));
     }
     form.classList.add('was-validated')    
 }

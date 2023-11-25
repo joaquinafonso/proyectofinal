@@ -75,6 +75,7 @@ function validateUser(){ // Se guardan los valores establecidos, establece que h
     register.actualUser = newUser
     register.users.push(newUser)
     localStorage.setItem('register', JSON.stringify(register))
+    localStorage.setItem('access-token', undefined)
     location.href = 'index.html'      
 }
 
