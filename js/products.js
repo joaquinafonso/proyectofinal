@@ -1,6 +1,6 @@
 let categoryProduct = localStorage.getItem('catID') //trae variable categoryProduct
 const container = document.getElementById('productsGrid');
-const API_URL = `https://japceibal.github.io/emercado-api/cats_products/${categoryProduct}.json`//concatena la variable para que acceda al JSON con el número de categoría
+const API_URL = PRODUCTS_URL + categoryProduct//concatena la variable para que acceda al JSON con el número de categoría
 const searcher = document.getElementById("searcher")
 const filterForm = document.getElementById('rangeFilterCount');
 const sortAscBtn = document.getElementById('ordenAscendente')

@@ -1,4 +1,4 @@
-const API_URL = CART_INFO_URL + '25801.json'
+const API_URL = CART_INFO_URL + '25801'
 const cart = document.getElementById('cart')
 const paymentMethodCard = document.getElementById('paymentMethodCard')
 const paymentMethodTransfer = document.getElementById('paymentMethodTransfer')
@@ -19,8 +19,10 @@ const adressForm = document.getElementById('adressForm')
 const cardForm = document.getElementById('card-form')
 const transferForm = document.getElementById('transfer-form')
 const succesfulyPurchase = document.getElementById('succesfuly-purchase')
+const rejectedPurchase = document.getElementById('rejected-purchase')
 
 succesfulyPurchase.style.display = 'none'
+rejectedPurchase.style.display = 'none'
 
 
 fetch(API_URL).then(res => res.json()).then(element => {
@@ -186,10 +188,32 @@ function adressSubmit (event){
         }
     }else{
         if(adressForm.checkValidity()){
-            succesfulyPurchase.style.display = 'block'
-            localStorage.setItem('cart', '[]')
-            loadCart([])
-            setTimeout(()=>{succesfulyPurchase.style.display = 'none'}, 5000)
+            var myHeaders = new Headers();
+            myHeaders.append("access-token", localStorage.getItem('access-token'));
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch(CART_BUY_URL, requestOptions)
+            .then(res => {
+                if(res.status == 401)
+                    throw new Error('usuario no válido')
+                else
+                    return res.json()
+                })
+            .then(res => {
+                succesfulyPurchase.style.display = 'block'
+                localStorage.setItem('cart', '[]')
+                loadCart([])
+                setTimeout(()=>{succesfulyPurchase.style.display = 'none'}, 5000)
+            })
+            .catch(err => {
+                console.log(err)
+                rejectedPurchase.style.display = 'block'
+                setTimeout(()=>{rejectedPurchase.style.display = 'none'}, 5000)
+            })
         }
         paymentMethodStatus.classList.remove("is-invalid")
     }
@@ -198,88 +222,3 @@ function adressSubmit (event){
     adressForm.classList.add('was-validated')
 
 }
-
-// function validateDeliveryType() {
-//     let deliveryRadios = document.getElementsByName("deliveryType");
-//     let isValid = false;
-
-//     for (let i = 0; i < deliveryRadios.length; i++) {
-//         if (deliveryRadios[i].checked) {
-//             isValid = true;
-//             break;
-//         }
-//     }
-
-//     let validationDelivery = document.getElementById("validationDelivery");
-
-//     if (!isValid) {
-//         validationDelivery.style.display = 'block'
-//     } 
-//     else{
-//         validationDelivery.style.display = 'none'
-//     }
-// }
-
-// // Funcion para validar método de pago y campos requeridos
-// function validatePaymentMethod() {
-//     let paymentRadios = document.getElementsByName("paymentMethod");
-//     let isPaymentValid = false;
-
-//     for (let i = 0; i < paymentRadios.length; i++) {
-//         if (paymentRadios[i].checked) {
-//             isPaymentValid = true;
-//             break;
-//         }
-//     }
-
-//     if (!isPaymentValid) {
-//         paymentFeedback.style.display = 'block'
-//     } 
-//     else{
-//         paymentFeedback.style.display = 'none'
-//     }
-
-//     // Valida los campos requeridos para cada metodo de pago
-//     if (paymentMethodCard.checked) {
-//         if (!ccn.checkValidity()) {
-//             paymentFeedback.te
-//             paymentFeedback.style.display = 'block'
-//         } else {
-//             ccn.classList.remove('is-invalid');
-//         }
-//     } else {
-//         streetAddress.classList.remove('is-invalid');
-//     }
-// }
-
-// buyBtn.addEventListener('click', function(){
-//     // Valida la calle
-//     if (!streetAddress.checkValidity()) {
-//         event.preventDefault();
-//         streetAddress.classList.add('is-invalid');
-//     } else {
-//         streetAddress.classList.remove('is-invalid');
-//     }
-//     // Valida el numero
-//     if (!addressNumber.checkValidity()) {
-//         event.preventDefault();
-//         addressNumber.classList.add('is-invalid');
-//     } else {
-//         addressNumber.classList.remove('is-invalid');
-//     }
-//     // Valida la esquina
-//     if (!addressDetail.checkValidity()) {
-//         event.preventDefault();
-//         addressDetail.classList.add('is-invalid');
-//     } else {
-//         addressDetail.classList.remove('is-invalid');
-//     }
-    // Valida si hay tipo de envio seleccionado
-    
-//     validateDeliveryType()
-
-    // Valida metodo de pago
-//     validatePaymentMethod()
-    //cosas que suceden al darle click a comprar
-    //validacion y eso en desarrollo
-// })
