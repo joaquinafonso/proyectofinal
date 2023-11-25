@@ -10,22 +10,32 @@ app.use(cors({
     origin: '*'
 }));
 
+app.get("/", (req, res) => {
+  // El primer parámetro SIEMPRE es asociado a la request (petición) y el segundo a la response (respuesta)
+  res.send("<h1>HOLA QUE TAL BUEN DIA, YO ESTOY CHETO MAL RECIEN CAIGO DE LA GIRA </h1>");
+}); 
+
 app.use(express.json());
 
-app.use("/cart", async (req, res, next) => {
-  try{
-    const decoded = jwt.verify(req.headers.token, SECRET_KEY)
-    next()
-  } catch {
-    res.status(401).json({messaje: 'Usuario no válido'})
-  }
-})
 
+
+app.use("/cart", (req,res,next)=>{
+  try {
+    const decoded = jwt.verify(req.headers["access-token"], SECRET_KEY);
+    console.log(decoded)
+    next();
+  } catch(error) {
+    res.status(401).json({message: "Usuario no autorizado"});
+  }
+});
+
+
+/*
 app.get("/cart", async (req, res) => {
   const CART_BUY_URL = require('./api/cart/buy.json');
   res.json(CART_BUY_URL);
 }
-)
+)*/
 
 app.get("/cats", async (req, res) => {
     const CATEGORIES_URL = require('./api/cats/cat.json');
@@ -74,6 +84,8 @@ app.post("/login", (req, res) => {
     res.status(401).json({message: "Algo salió mal"})
   }
 })
+
+
 
 
 
